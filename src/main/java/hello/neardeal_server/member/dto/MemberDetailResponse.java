@@ -4,8 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
-@Schema(description = "회원가입 요청")
-public class SignupRequest {
+@Schema(description = "회원 정보 조회")
+public class MemberDetailResponse {
+
+    @Schema(description = "회원 ID")
+    private Long id;
 
     @Schema(description = "이메일")
     private String email;
