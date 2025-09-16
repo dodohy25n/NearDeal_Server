@@ -2,6 +2,7 @@ package hello.neardeal_server.coupon;
 
 import hello.neardeal_server.coupon.dto.CouponDetailResponse;
 import hello.neardeal_server.coupon.dto.CouponRequest;
+import hello.neardeal_server.coupon.dto.CouponListResponse;
 import hello.neardeal_server.member.dto.MemberDetailResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,8 +12,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Tag(name = "쿠폰 컨트롤러", description = "쿠폰 관련 API 엔드포인트")
 //@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
@@ -44,6 +51,31 @@ public class CouponController {
     public ResponseEntity<CouponDetailResponse> getCouponDetail(@PathVariable Long couponId) {
 
         return null;
+    }
+
+    @GetMapping
+    @Operation(summary = "쿠폰 목록 조회", description = "쿠폰 목록 페이징 조회하기")
+    //    @SecurityRequirement(name = "bearerAuth")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "쿠폰 목록 조회 성공", content = @Content(schema = @Schema(implementation = CouponListResponse.class)))
+    })
+    public ResponseEntity<CouponListResponse> getCouponList(
+            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
+    ) {
+        // This is a mock implementation
+        List<CouponDetailResponse> mockCoupons = new ArrayList<>();
+
+        Page<CouponDetailResponse> couponPage = new PageImpl<>(mockCoupons, PageRequest.of(page, size), 0);
+
+        CouponListResponse response = new CouponListResponse(
+                couponPage.getContent(),
+                couponPage.getNumber(),
+                couponPage.getSize(),
+                couponPage.getTotalPages(),
+                couponPage.getTotalElements()
+        );
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{couponId}")
