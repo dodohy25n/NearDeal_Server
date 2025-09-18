@@ -1,4 +1,4 @@
-package hello.neardeal_server.coupon;
+package hello.neardeal_server.coupon.controller;
 
 import hello.neardeal_server.coupon.dto.CouponDetailResponse;
 import hello.neardeal_server.coupon.dto.CouponRequest;
@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;

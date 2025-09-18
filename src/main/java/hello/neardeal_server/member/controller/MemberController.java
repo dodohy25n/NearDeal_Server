@@ -1,4 +1,4 @@
-package hello.neardeal_server.member;
+package hello.neardeal_server.member.controller;
 
 import hello.neardeal_server.member.dto.MemberListResponse;
 import hello.neardeal_server.member.dto.MemberDetailResponse;

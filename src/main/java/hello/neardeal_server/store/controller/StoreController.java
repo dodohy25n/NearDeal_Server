@@ -1,4 +1,4 @@
-package hello.neardeal_server.store;
+package hello.neardeal_server.store.controller;
 
 import hello.neardeal_server.store.dto.StoreDetailResponse;
 import hello.neardeal_server.store.dto.StoreListResponse;
