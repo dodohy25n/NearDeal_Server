@@ -24,8 +24,8 @@ public class CouponRequest {
     @Schema(description = "설명")
     private String description;
 
-    @Schema(description = "바코드 번호")
-    private String couponCode;
+//    @Schema(description = "바코드 번호")
+//    private String couponCode;
 
     @Schema(description = "1인 당 발급 제한 개수")
     private Long limitPerPerson;

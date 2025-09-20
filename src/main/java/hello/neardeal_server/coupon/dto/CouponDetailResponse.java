@@ -16,11 +16,14 @@ public class CouponDetailResponse {
     private Long itemId;
 
     @Schema(description = "발급 수량")
-    private Long issuedQuantity;
+    private Long issuingQuantity;
 
     @Schema(description = "남은 수량")
     private Long remainingQuantity;
 
+    @Schema(description = "쿠폰 상태")
+    private String couponStatus;
+    
     @Schema(description = "쿠폰 타입")
     private String couponType;
     
@@ -33,11 +36,14 @@ public class CouponDetailResponse {
     @Schema(description = "설명")
     private String description;
 
-    @Schema(description = "바코드 번호")
-    private String couponCode;
+//    @Schema(description = "바코드 번호")
+//    private String couponCode;
 
     @Schema(description = "1인 당 발급 제한 개수")
-    private Long limitPerPerson;
+    private Long limitPerPerson;    
+    
+    @Schema(description = "유의사항")
+    private String notice;
 
     @Schema(description = "쿠폰 적용 시작 일시")
     private Timestamp couponStartDate;
@@ -45,9 +51,9 @@ public class CouponDetailResponse {
     @Schema(description = "쿠폰 적용 마감 일시")
     private Timestamp couponEndDate;
 
-    @Schema(description = "쿠폰 등록 일시")
-    private Timestamp createdAt;
-
     @Schema(description = "제휴 카테고리")
     private String partnerCategory;
+
+    @Schema(description = "쿠폰 등록 일시")
+    private Timestamp createdAt;
 }
