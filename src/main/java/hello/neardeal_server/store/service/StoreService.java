@@ -28,17 +28,21 @@ public class StoreService {
     /**
      * 상점 등록
      * */
-    public Long createStore(StoreRequest request, MultipartFile file){
+    public Long createStore(StoreRequest request){
 
 //        Long owner = 1L;
+        MultipartFile file = request.getImage();
 
         // 멤버 폴더 생성 (nearDealImage/{memberId})
         String storeName = request.getStoreName();
 
-        // 사진 저장
-        String publicUrl = fileStorage.createUrl(storeName, file, -1);
+        // 이미지가 있을 때만 저장
+        String publicUrl = null;
+        if (file != null && !file.isEmpty()) {
+            publicUrl = fileStorage.createUrl(storeName, file, 0);
+        }
 
-        // todo: owner 만든 뒤 해야함
+        // todo: owner 만든 뒤 owner 넣어서 new 대신 해야함
         Store store = Store.create(request, publicUrl, new Owner());
         Store save = storeRepository.save(store);
 
@@ -54,7 +58,6 @@ public class StoreService {
         return StoreDetailResponse.entityToResponse(store);
 
     }
-
 
     /**
      * 상점 필터링 목록 조회

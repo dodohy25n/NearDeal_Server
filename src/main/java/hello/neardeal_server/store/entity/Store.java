@@ -31,6 +31,7 @@ public class Store {
     private String storeName;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private StoreCategory category;
 
     @Embedded

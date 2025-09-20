@@ -1,24 +1,22 @@
 package hello.neardeal_server;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Embedded;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Embeddable
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 @Schema(description = "시작/종료 시각")
 public class DurationTime {
 
-    private LocalDateTime startTime;
 
-    private LocalDateTime endTime;
+    private LocalTime startTime;
 
+    private LocalTime endTime;
 
 }

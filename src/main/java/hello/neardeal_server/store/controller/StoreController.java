@@ -35,7 +35,6 @@ import java.util.List;
 public class StoreController {
 
     private final StoreService storeService;
-    private final ObjectMapper objectMapper; // LocalDateTime 읽기 위해서
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "[점주]상점 등록", description = "새 상점 등록 하기, form-data로 보내야함, store, files 분리시켜서")
@@ -44,15 +43,10 @@ public class StoreController {
             @ApiResponse(responseCode = "400", description = "상점 등록 실패")
     })
     public ResponseEntity<Long> createStore(
-//            @RequestPart("store") StoreRequest storeRequest,
-            @RequestPart("store") String storeJson,
-            @RequestPart("files") MultipartFile uploadFiles
-    ) throws com.fasterxml.jackson.core.JsonProcessingException  {
+            @ModelAttribute StoreRequest storeRequest
+    ) {
 
-//        Long storeId = storeService.createStore(storeRequest, uploadFiles);
-
-        StoreRequest dto = objectMapper.readValue(storeJson, StoreRequest.class);
-        Long storeId = storeService.createStore(dto, uploadFiles);
+        Long storeId = storeService.createStore(storeRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(storeId);
     }

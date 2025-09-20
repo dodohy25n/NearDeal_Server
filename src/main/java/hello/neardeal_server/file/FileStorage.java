@@ -43,7 +43,7 @@ public class FileStorage {
             Files.createDirectories(dir);
 
             String ext = getSafeExtension(file.getOriginalFilename());
-            String newName = (index + 1) + (ext.isEmpty() ? "" : "." + ext);
+            String newName = index + (ext.isEmpty() ? "" : "." + ext);
 
             // 상대 경로를 부모 경로에 붙여주는 역할
             Path fullPath = dir.resolve(newName).normalize().toAbsolutePath();
