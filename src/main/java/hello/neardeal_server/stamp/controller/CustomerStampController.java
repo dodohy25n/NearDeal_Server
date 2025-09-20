@@ -22,16 +22,17 @@ public class CustomerStampController {
 
     private final CustomerStampService customerStampService;
 
-    @PostMapping("/{stampId}/save")
+    @PostMapping("/{stampId}/save/{customerId}")
     @Operation(summary = "[고객]스탬프 만들기", description = "스탬프 만들기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "스탬프 만들기 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
     })
     public ResponseEntity<Long> saveStamp(
-            @Parameter(name = "stampId", description = "스탬프 ID", required = true) @PathVariable Long stampId
+            @Parameter(name = "stampId", description = "스탬프 ID", required = true) @PathVariable Long stampId,
+            @Parameter(name = "customerId", description = "고객 ID", required = true) @PathVariable Long customerId
     ) {
-        Long customerStampId = customerStampService.requestStamp(stampId);
+        Long customerStampId = customerStampService.requestStamp(stampId, customerId);
         return ResponseEntity.status(HttpStatus.CREATED).body(customerStampId);
     }
 

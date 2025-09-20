@@ -1,6 +1,6 @@
 package hello.neardeal_server.item.service;
 
-import hello.neardeal_server.file.FileStorage;
+import hello.neardeal_server.common.file.FileStorage;
 import hello.neardeal_server.item.dto.response.ItemDetailResponse;
 import hello.neardeal_server.item.dto.request.ItemRequest;
 import hello.neardeal_server.item.entity.Item;

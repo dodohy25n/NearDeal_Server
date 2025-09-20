@@ -1,4 +1,4 @@
-package hello.neardeal_server.file;
+package hello.neardeal_server.common.file;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package hello.neardeal_server.configuration;
+package hello.neardeal_server.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
