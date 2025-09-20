@@ -31,12 +31,8 @@ public class ItemService {
         Store store = storeService.findOne(storeId);
         MultipartFile image = itemRequest.getImage();
 
-        String imageUrl = null;
 
-        // 이미지가 있을 때만 저장
-        if (image != null && !image.isEmpty()) {
-            imageUrl = fileStorage.createUrl(store.getStoreName(), image, itemRequest.getIndex());
-        }
+        String imageUrl = createImageUrl(itemRequest.getIndex(), image, store.getStoreName());
 
         Item item = Item.create(itemRequest, store, imageUrl);
 
@@ -58,14 +54,34 @@ public class ItemService {
     /**
      * 아이템 정보 수정
      */
-//    public Long updateItemInfo(Long itemId, ItemRequest itemRequest){
-//
-//    }
+    public Long updateItemInfo(Long itemId, ItemRequest itemRequest){
+        Item item = findOne(itemId);
+
+        MultipartFile image = itemRequest.getImage();
+
+        // 이미지가 있을 때만 저장
+        String imageUrl = createImageUrl(itemRequest.getIndex(), image, item.getStore().getStoreName());
+
+        // url 없으면 삭제하기
+        if (imageUrl == null) {
+            fileStorage.deleteByPublicUrl(item.getImageUrl());
+        }
+
+        return item.updateItem(itemRequest, imageUrl);
+    }
 
 
     public Item findOne(Long itemId){
         return itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("아이템 없으무이다"));
     }
 
-
+    // 이미지 만들기
+    private String createImageUrl(int index, MultipartFile image, String dirName) {
+        // 이미지가 있을 때만 저장
+        String imageUrl = null;
+        if (image != null && !image.isEmpty()) {
+            imageUrl = fileStorage.createUrl(dirName, image, index);
+        }
+        return imageUrl;
+    }
 }

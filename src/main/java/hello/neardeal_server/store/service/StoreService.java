@@ -111,15 +111,13 @@ public class StoreService {
 
     // 이미지 만들기
     private String createImageUrl(MultipartFile file, String dirName) {
-        // 멤버 폴더 생성 (nearDealImage/{memberId})
         // 이미지가 있을 때만 저장
         String publicUrl = null;
         if (file != null && !file.isEmpty()) {
             publicUrl = fileStorage.createUrl(dirName, file, 0);
-            return publicUrl;
         }
         
-        return null;
+        return publicUrl;
     }
 
 }

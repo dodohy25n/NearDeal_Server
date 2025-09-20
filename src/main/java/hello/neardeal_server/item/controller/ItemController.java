@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class ItemController {
             @PathVariable("storeId") Long storeId
     ) {
         Long itemId = itemService.createItem(itemRequest, storeId);
-        return ResponseEntity.ok(itemId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemId);
     }
 
 //    @GetMapping("/{itemId}")
@@ -76,9 +77,12 @@ public class ItemController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
     })
     @Parameter(name = "itemId", description = "상품 ID", required = true)
-    public ResponseEntity<ItemDetailResponse> updateItemDetail(
-            @PathVariable Long itemId, @RequestBody ItemRequest itemRequest) {
-        return null;
+    public ResponseEntity<Long> updateItemDetail(
+            @PathVariable Long itemId, @ModelAttribute ItemRequest itemRequest) {
+
+        Long result = itemService.updateItemInfo(itemId, itemRequest);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @DeleteMapping("/{itemId}")
