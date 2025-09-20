@@ -27,7 +27,7 @@ import java.util.List;
 public class StoreController {
 
     @PostMapping
-    @Operation(summary = "상점 등록", description = "새 상점 등록 하기")
+    @Operation(summary = "[점주]상점 등록", description = "새 상점 등록 하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "새로운 상점 등록 성공"),
             @ApiResponse(responseCode = "400", description = "상점 등록 실패")
@@ -39,7 +39,7 @@ public class StoreController {
     }
 
     @GetMapping("/{storeId}")
-    @Operation(summary = "상점 정보 조회", description = "상점 정보 조회하기")
+    @Operation(summary = "[소비자, 점주]상점 정보 조회", description = "상점 정보 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "상점 정보 조회 성공", content = @Content(schema = @Schema(implementation = StoreDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
@@ -51,7 +51,7 @@ public class StoreController {
     }
 
     @GetMapping
-    @Operation(summary = "상점 목록 조회", description = "상점 목록 페이징 조회하기")
+    @Operation(summary = "[소비자]상점 목록 조회", description = "상점 목록 페이징 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreListResponse.class)))
     })
@@ -76,7 +76,7 @@ public class StoreController {
 
 
     @GetMapping
-    @Operation(summary = "상점 필터링 목록 조회", description = "상점 필터링 목록 페이징 조회하기")
+    @Operation(summary = "[소비자]상점 필터링 목록 조회", description = "상점 필터링 목록 페이징 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreListResponse.class)))
     })
@@ -102,7 +102,7 @@ public class StoreController {
 
 
     @PutMapping("/{storeId}")
-    @Operation(summary = "상점 정보 수정", description = "상점 정보 수정하기")
+    @Operation(summary = "[점주]상점 정보 수정", description = "상점 정보 수정하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "상점 정보 수정 성공", content = @Content(schema = @Schema(implementation = StoreDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
@@ -113,7 +113,7 @@ public class StoreController {
     }
 
     @DeleteMapping("/{storeId}")
-    @Operation(summary = "상점 정보 삭제", description = "상점 정보 삭제하기")
+    @Operation(summary = "[점주]상점 정보 삭제", description = "상점 정보 삭제하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "상점 정보 삭제 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
