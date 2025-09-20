@@ -60,7 +60,7 @@ public class StampService {
     @Transactional
     public Long findUpdateStampInfo(Long stampId, StampRequest request){
         Stamp stamp = findOne(stampId);
-        stamp.updateStampInfo(request);
+        return stamp.updateStampInfo(request);
     }
 
     /**
