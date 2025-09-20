@@ -92,12 +92,16 @@ public class StoreController {
     @PutMapping("/{storeId}")
     @Operation(summary = "[점주]상점 정보 수정", description = "상점 정보 수정하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "상점 정보 수정 성공", content = @Content(schema = @Schema(implementation = StoreDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "상점 정보 수정 성공", content = @Content(schema = @Schema(implementation = StoreDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
     })
     @Parameter(name = "storeId", description = "상점 ID", required = true)
-    public ResponseEntity<StoreDetailResponse> updateStoreDetail(@PathVariable Long storeId, @RequestBody StoreRequest storeRequest) {
-        return null;
+    public ResponseEntity<Long> updateStoreInfo(@PathVariable Long storeId, @RequestBody StoreRequest storeRequest) {
+
+        Long result = storeService.updateStoreInfo(storeId, storeRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+
     }
 
     @DeleteMapping("/{storeId}")
@@ -107,8 +111,9 @@ public class StoreController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
     })
     @Parameter(name = "storeId", description = "상점 ID", required = true)
-    public ResponseEntity<Void> deleteStore(@PathVariable Long storeId) {
-        return null;
+    public ResponseEntity<String> deleteStore(@PathVariable Long storeId) {
+        storeService.deleteStore(storeId);
+        return ResponseEntity.ok("ok");
     }
 
 

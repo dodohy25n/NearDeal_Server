@@ -103,7 +103,7 @@ public class Store {
         store.lng = request.getLng();
         store.imageUrl = imageUrls;
         store.likeCount = 0;
-
+// todo:
 //        store.addOwner(owner);
 
         return store;
@@ -114,7 +114,7 @@ public class Store {
     /**
      * 가게 정보 변경
      */
-    public Long updateStore(StoreRequest request, String imageUrls){
+    public Long updateStore(StoreRequest request){
         this.storeName = request.getStoreName();
         this.category = request.getCategory();
         this.openingTime = request.getOpeningTime();
@@ -123,8 +123,14 @@ public class Store {
         this.introduce = request.getIntroduce();
         this.lat = request.getLat();
         this.lng = request.getLng();
-        this.imageUrl = imageUrls;
 
+        return this.id;
+    }
+    /**
+     * 가게 대표 이미지 변경
+     */
+    public Long updateImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
         return this.id;
     }
 
