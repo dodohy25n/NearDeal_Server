@@ -13,7 +13,7 @@ import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Owner {
 
     @Id
@@ -25,4 +25,6 @@ public class Owner {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Store> stores = new ArrayList<>();
 
+    // todo: owner 만든 뒤 store저장 해야함
+    
 }

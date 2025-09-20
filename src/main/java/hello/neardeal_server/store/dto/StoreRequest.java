@@ -17,11 +17,9 @@ public class StoreRequest {
     @Schema(description = "카테고리")
     private String category;
 
-    @Embedded
     @Schema(description = "영업시간")
     private DurationTime openingTime;
 
-    @Embedded
     @Schema(description = "브레이크 타임")
     private DurationTime breakTime;
 

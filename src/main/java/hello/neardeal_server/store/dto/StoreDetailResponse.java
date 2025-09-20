@@ -1,23 +1,31 @@
 package hello.neardeal_server.store.dto;
 
+import hello.neardeal_server.DurationTime;
 import hello.neardeal_server.store.StoreCategory;
+import hello.neardeal_server.store.entity.Store;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
+import jakarta.persistence.Embedded;
+import lombok.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
-@Getter
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
+@Builder
 @Schema(description = "상점 상세 정보 조회")
 public class StoreDetailResponse {
 
-    @Schema(description = "아이템 목록")
-    private List<Long> items;
+//    @Schema(description = "아이템 목록")
+//    private List<Long> items;
 
-    @Schema(description = "리뷰 목록")
-    private List<String> reviews;
+//    @Schema(description = "리뷰 목록")
+//    private List<String> reviews;
 
-    @Schema(description = "쿠폰 목록")
-    private List<Long> coupons;
+//    @Schema(description = "쿠폰 목록")
+//    private List<Long> coupons;
+
+    @Schema(description = "상점 ID")
+    private Long storeId;
 
     @Schema(description = "좋아요 수")
     private int likeCount;
@@ -28,21 +36,39 @@ public class StoreDetailResponse {
     @Schema(description = "카테고리")
     private StoreCategory category;
 
+    @Embedded
     @Schema(description = "영업시간")
-    private String operatingHours;
+    private DurationTime openingTime;
 
-    @Schema(description = "대표 이미지")
-    private String mainImage;
+    @Embedded
+    @Schema(description = "브레이크 타임")
+    private DurationTime breakTime;
 
     @Schema(description = "주소")
     private String address;
 
     @Schema(description = "소개")
-    private String introduction;
+    private String introduce;
 
-    @Schema(description = "별점")
-    private double rating;
+    @Schema(description = "대표 이미지 URL")
+    private String mainImageUrl;
 
-    @Schema(description = "브레이크 타임")
-    private String breakTime;
+//    @Schema(description = "별점")
+//    private double rating;
+
+
+    public static StoreDetailResponse entityToResponse(Store store){
+
+        return StoreDetailResponse.builder()
+                .storeId(store.getId())
+                .likeCount(store.getLikeCount())
+                .name(store.getStoreName())
+                .category(store.getCategory())
+                .openingTime(store.getOpeningTime())
+                .breakTime(store.getBreakTime())
+                .address(store.getAddress())
+                .introduce(store.getIntroduce())
+                .mainImageUrl(store.getImageUrl())
+                .build();
+    }
 }
