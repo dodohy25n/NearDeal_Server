@@ -21,6 +21,7 @@ public class Item {
 
     private String name;
 
+    @Column(unique = true)
     private String imageUrl;
 
     private Integer price;
@@ -64,6 +65,24 @@ public class Item {
 
     // == 비즈니스 로직 == //
 
+    /**
+     * 아이템 업데이트
+     */
+    public Long updateItem(ItemRequest itemRequest, String imageUrl){
+        this.name = itemRequest.getName();
+        this.imageUrl = imageUrl;
+        this.price = itemRequest.getPrice();
+        this.isSoldOut = itemRequest.getIsSoldOut();
+        this.introduce = itemRequest.getIntroduction();
+        this.isRepresentative = itemRequest.getIsRepresentative();
+
+        return this.id;
+    }
 
 
+    public Long toggleItemStatus() {
+        this.isSoldOut = !this.isSoldOut;
+        return this.id;
+
+    }
 }

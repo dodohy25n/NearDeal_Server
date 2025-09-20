@@ -1,6 +1,6 @@
 package hello.neardeal_server.store.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import hello.neardeal_server.common.PageResponse;
 import hello.neardeal_server.stamp.dto.StampDetailResponse;
 import hello.neardeal_server.stamp.dto.StampListResponse;
 import hello.neardeal_server.store.StoreCategory;
@@ -23,7 +23,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,15 +70,16 @@ public class StoreController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreListResponse.class)))
     })
-    public ResponseEntity<Page<StoreDetailResponse>> getStoreList(
+    public ResponseEntity<PageResponse<StoreDetailResponse>> getStoreList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
             @Parameter(description = "필터링 할 카테고리") @RequestParam(required = false) StoreCategory category
     ) {
 
         Page<StoreDetailResponse> filerStore = storeService.findFilerStore(category, size, page);
+        PageResponse<StoreDetailResponse> result = PageResponse.pageToResponse(filerStore);
 
-        return ResponseEntity.ok(filerStore);
+        return ResponseEntity.ok(result);
     }
 
 
@@ -90,7 +90,9 @@ public class StoreController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
     })
     @Parameter(name = "storeId", description = "상점 ID", required = true)
-    public ResponseEntity<Long> updateStoreInfo(@PathVariable Long storeId, @RequestBody StoreRequest storeRequest) {
+    public ResponseEntity<Long> updateStoreInfo(
+            @PathVariable Long storeId,
+            @ModelAttribute StoreRequest storeRequest) {
 
         Long result = storeService.updateStoreInfo(storeId, storeRequest);
 
@@ -107,7 +109,7 @@ public class StoreController {
     @Parameter(name = "storeId", description = "상점 ID", required = true)
     public ResponseEntity<String> deleteStore(@PathVariable Long storeId) {
         storeService.deleteStore(storeId);
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("상점 삭제완료");
     }
 
 
@@ -116,7 +118,7 @@ public class StoreController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "스탬프 목록 조회 성공", content = @Content(schema = @Schema(implementation = StampListResponse.class)))
     })
-    public ResponseEntity<StampListResponse> getStampList(
+    public ResponseEntity<PageResponse<StampDetailResponse>> getStampList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
             @Parameter(description = "가게 ID") @PathVariable Long storeId
@@ -126,14 +128,8 @@ public class StoreController {
 
         Page<StampDetailResponse> stampPage = new PageImpl<>(mockStamps, PageRequest.of(page, size), 0);
 
-        StampListResponse response = new StampListResponse(
-                stampPage.getContent(),
-                stampPage.getNumber(),
-                stampPage.getSize(),
-                stampPage.getTotalPages(),
-                stampPage.getTotalElements()
-        );
-        return ResponseEntity.ok(response);
+        PageResponse<StampDetailResponse> result = PageResponse.pageToResponse(stampPage);
+        return ResponseEntity.ok(result);
     }
 
 }

@@ -1,14 +1,11 @@
 package hello.neardeal_server.store.dto;
 
-import hello.neardeal_server.DurationTime;
+import hello.neardeal_server.common.DurationTime;
 import hello.neardeal_server.store.StoreCategory;
 import hello.neardeal_server.store.entity.Store;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embedded;
 import lombok.*;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
 @Builder
