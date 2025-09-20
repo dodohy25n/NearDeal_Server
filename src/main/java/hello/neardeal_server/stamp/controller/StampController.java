@@ -56,16 +56,16 @@ public class StampController {
     }
 
     @GetMapping("/list/{storeId}")
-    @Operation(summary = "[점주/고객]가게의 전체 스탬프 정보 조회", description = "가게의 전체 스탬프 정보 조회하기")
+    @Operation(summary = "[점주/고객]가게의 전체 스탬프 목록 조회", description = "가게의 전체 스탬프 목록 조회하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "가게의 전체 스탬프 정보 조회 성공"),
+            @ApiResponse(responseCode = "200", description = "가게의 전체 스탬프 목록 조회 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 가게일지도?")
     })
     @Parameter(name = "stampId", description = "스탬프 ID", required = true)
     public ResponseEntity<PageResponse<StampInfoResponse>> getStampByStore(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
-            @PathVariable Long storeId
+            @Parameter(description = "가게 ID") @PathVariable Long storeId
     ) {
         Page<StampInfoResponse> all = stampService.findAllStampInfoByStore(storeId, page, size);
         PageResponse<StampInfoResponse> result = PageResponse.pageToResponse(all);
@@ -81,7 +81,7 @@ public class StampController {
     })
     @Parameter(name = "stampId", description = "스탬프 ID", required = true)
     public ResponseEntity<Long> updateStampDetail(
-            @PathVariable Long stampId,
+            @Parameter(description = "스탬프 ID") @PathVariable Long stampId,
             @RequestBody StampRequest stampRequest
     ) {
         Long result = stampService.updateStampInfo(stampId, stampRequest);

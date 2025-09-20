@@ -79,4 +79,8 @@ public class MemberService  {
 
         return MemberDetailResponse.entityToResponse(member);
     }
+
+    public Customer findOneCustomer(Long customerId){
+        return customerRepository.findById(customerId).orElseThrow(()-> new RuntimeException("customer 없습니다"));
+    }
 }
