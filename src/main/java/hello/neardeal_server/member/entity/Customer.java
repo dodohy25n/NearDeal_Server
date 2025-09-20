@@ -40,13 +40,13 @@ public class Customer {
 
     public static Customer create(CustomerRequest customerRequest) {
         Customer customer = new Customer();
-        customer.affiliation = PartnerCategory.valueOf(customerRequest.getAffiliation());
+        customer.affiliation = customerRequest.getAffiliation();
         return customer;
     }
 
-    public void update(hello.neardeal_server.member.dto.MemberUpdateRequest request) {
-        if (request.getAffiliation() != null) {
-            this.affiliation = PartnerCategory.valueOf(request.getAffiliation());
+    public void update(PartnerCategory category) {
+        if (category!= null) {
+            this.affiliation = category;
         }
     }
 }

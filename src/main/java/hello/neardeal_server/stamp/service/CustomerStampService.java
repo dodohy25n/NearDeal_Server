@@ -37,8 +37,7 @@ public class CustomerStampService {
     public Long requestStamp(Long stampId){
         Stamp stamp = stampService.findOne(stampId);
 
-        // todo: customer 시큐리티 이용해서 동적으로 받아서 사용하게끔?
-        // todo: customer ID 이용해서 중복 신청 못하도록 만들기
+        // todo: customer 시큐리티 이용해서 받아오기
         Customer customer = memberService.findOneCustomer(1L);
 
         boolean exist = customerStampRepository.existsByCustomerAndStamp(customer, stamp);

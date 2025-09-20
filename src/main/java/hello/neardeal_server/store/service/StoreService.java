@@ -1,6 +1,9 @@
 package hello.neardeal_server.store.service;
 
 import hello.neardeal_server.file.FileStorage;
+import hello.neardeal_server.member.entity.Owner;
+import hello.neardeal_server.member.repository.MemberRepository;
+import hello.neardeal_server.member.service.MemberService;
 import hello.neardeal_server.store.StoreCategory;
 import hello.neardeal_server.store.dto.response.StoreDetailResponse;
 import hello.neardeal_server.store.dto.request.StoreRequest;
@@ -21,6 +24,8 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final FileStorage fileStorage;
+    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
 
     @Transactional
@@ -28,12 +33,13 @@ public class StoreService {
      * 상점 등록
      * */
     public Long createStore(StoreRequest request){
-
-//        Long owner = 1L;
+        
+        // todo: owner 시큐리티에서 불러오기
+        Long ownerId = 1L;
+        Owner owner = memberService.findOneOwner(ownerId);
         String publicUrl = createImageUrl(request.getImage(), request.getStoreName());
 
-        // todo: owner 만든 뒤 owner 넣어서 new 대신 해야함
-        Store store = Store.create(request, publicUrl);
+        Store store = Store.create(request, publicUrl, owner);
         Store save = storeRepository.save(store);
 
         return save.getId();
@@ -98,11 +104,6 @@ public class StoreService {
 
         storeRepository.delete(store);
     }
-
-    /** todo: 이거 스탬프로 가야할듯?
-     * 내 가게 스탬프 목록 조회
-     * */
-
 
 
     public Store findOne(Long storeId){

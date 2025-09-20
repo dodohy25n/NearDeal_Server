@@ -1,5 +1,6 @@
 package hello.neardeal_server.member.dto;
 
+import hello.neardeal_server.member.entity.PartnerCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,5 +26,5 @@ public class MemberUpdateRequest {
     private String phone;
 
     @Schema(description = "소속 (고객인 경우)")
-    private String affiliation;
+    private PartnerCategory affiliation;
 }
