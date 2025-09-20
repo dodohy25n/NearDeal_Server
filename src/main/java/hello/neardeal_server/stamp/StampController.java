@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
 public class StampController {
 
     @PostMapping
-    @Operation(summary = "스탬프 등록", description = "새 스탬프 등록 하기")
+    @Operation(summary = "[점주]스탬프 등록", description = "새 스탬프 등록 하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "새로운 스탬프 등록 성공"),
             @ApiResponse(responseCode = "400", description = "스탬프 등록 실패")
@@ -35,7 +36,7 @@ public class StampController {
     }
 
     @GetMapping("/{stampId}")
-    @Operation(summary = "스탬프 정보 조회", description = "스탬프 정보 조회하기")
+    @Operation(summary = "[점주/소비자]스탬프 정보 조회", description = "스탬프 정보 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "스탬프 정보 조회 성공", content = @Content(schema = @Schema(implementation = StampDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
@@ -45,32 +46,8 @@ public class StampController {
         return null;
     }
 
-    @GetMapping
-    @Operation(summary = "스탬프 목록 조회", description = "스탬프 목록 페이징 조회하기")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "스탬프 목록 조회 성공", content = @Content(schema = @Schema(implementation = StampListResponse.class)))
-    })
-    public ResponseEntity<StampListResponse> getStampList(
-            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
-    ) {
-        // This is a mock implementation
-        List<StampDetailResponse> mockStamps = new ArrayList<>();
-
-        Page<StampDetailResponse> stampPage = new PageImpl<>(mockStamps, PageRequest.of(page, size), 0);
-
-        StampListResponse response = new StampListResponse(
-                stampPage.getContent(),
-                stampPage.getNumber(),
-                stampPage.getSize(),
-                stampPage.getTotalPages(),
-                stampPage.getTotalElements()
-        );
-        return ResponseEntity.ok(response);
-    }
-
     @PutMapping("/{stampId}")
-    @Operation(summary = "스탬프 정보 수정", description = "스탬프 정보 수정하기")
+    @Operation(summary = "[점주]스탬프 정보 수정", description = "스탬프 정보 수정하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "스탬프 정보 수정 성공", content = @Content(schema = @Schema(implementation = StampDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
@@ -80,14 +57,14 @@ public class StampController {
         return null;
     }
 
-    @DeleteMapping("/{stampId}")
-    @Operation(summary = "스탬프 정보 삭제", description = "스탬프 정보 삭제하기")
+    @GetMapping("/{stampId}/password")
+    @Operation(summary = "[점주]스탬프 비밀번호 조회", description = "스탬프 비밀번호 조회하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "스탬프 정보 삭제 성공"),
+            @ApiResponse(responseCode = "200", description = "스탬프 비밀번호 조회 성공", content = @Content(schema = @Schema(implementation = StampDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
     })
     @Parameter(name = "stampId", description = "스탬프 ID", required = true)
-    public ResponseEntity<Void> deleteStamp(@PathVariable Long stampId) {
+    public ResponseEntity<String> getStampPassword(@PathVariable Long stampId) {
         return null;
     }
 }

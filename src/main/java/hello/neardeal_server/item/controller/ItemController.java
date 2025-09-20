@@ -90,4 +90,15 @@ public class ItemController {
     public ResponseEntity<Void> deleteItem(@PathVariable Long itemId) {
         return null;
     }
+
+    @PatchMapping("/{itemId}/status")
+    @Operation(summary = "상품 품절 상태 변경", description = "상품 품절 상태 변경하기")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "상품 정보 수정 성공", content = @Content(schema = @Schema(implementation = ItemDetailResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
+    })
+    @Parameter(name = "itemId", description = "상품 ID", required = true)
+    public ResponseEntity<Void> updateItemStatus(@PathVariable Long itemId) {
+        return null;
+    }
 }

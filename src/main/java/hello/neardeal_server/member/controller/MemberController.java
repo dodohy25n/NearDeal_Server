@@ -3,6 +3,8 @@ package hello.neardeal_server.member.controller;
 import hello.neardeal_server.member.dto.MemberListResponse;
 import hello.neardeal_server.member.dto.MemberDetailResponse;
 import hello.neardeal_server.member.dto.SignupRequest;
+import hello.neardeal_server.store.dto.StoreDetailResponse;
+import hello.neardeal_server.store.dto.StoreRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -73,5 +75,16 @@ public class MemberController {
                 memberPage.getTotalElements()
         );
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{storeId}")
+    @Operation(summary = "회원 정보 수정", description = "회원 정보 수정하기")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "회원 정보 수정 성공", content = @Content(schema = @Schema(implementation = MemberDetailResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 회원")
+    })
+    @Parameter(name = "memberId", description = "회원 ID", required = true)
+    public ResponseEntity<MemberDetailResponse> updateStoreDetail(@PathVariable Long memberId, @RequestBody SignupRequest signupRequest) {
+        return null;
     }
 }

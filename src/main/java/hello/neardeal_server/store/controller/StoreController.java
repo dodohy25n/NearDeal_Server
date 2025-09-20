@@ -1,5 +1,7 @@
 package hello.neardeal_server.store.controller;
 
+import hello.neardeal_server.stamp.dto.StampDetailResponse;
+import hello.neardeal_server.stamp.dto.StampListResponse;
 import hello.neardeal_server.store.dto.StoreDetailResponse;
 import hello.neardeal_server.store.dto.StoreListResponse;
 import hello.neardeal_server.store.dto.StoreRequest;
@@ -72,6 +74,33 @@ public class StoreController {
         return ResponseEntity.ok(response);
     }
 
+
+    @GetMapping
+    @Operation(summary = "상점 필터링 목록 조회", description = "상점 필터링 목록 페이징 조회하기")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreListResponse.class)))
+    })
+    public ResponseEntity<StoreListResponse> getStoreList(
+            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
+            @Parameter(description = "필터링 할 카테고리") @RequestParam() String category
+    ) {
+        // This is a mock implementation
+        List<StoreDetailResponse> mockStores = new ArrayList<>();
+
+        Page<StoreDetailResponse> storePage = new PageImpl<>(mockStores, PageRequest.of(page, size), 0);
+
+        StoreListResponse response = new StoreListResponse(
+                storePage.getContent(),
+                storePage.getNumber(),
+                storePage.getSize(),
+                storePage.getTotalPages(),
+                storePage.getTotalElements()
+        );
+        return ResponseEntity.ok(response);
+    }
+
+
     @PutMapping("/{storeId}")
     @Operation(summary = "상점 정보 수정", description = "상점 정보 수정하기")
     @ApiResponses(value = {
@@ -93,5 +122,32 @@ public class StoreController {
     public ResponseEntity<Void> deleteStore(@PathVariable Long storeId) {
         return null;
     }
+
+
+    @GetMapping("/{storeId}/stamp")
+    @Operation(summary = "[점주]내 가게 스탬프 목록 조회", description = "내 가게 스탬프 목록 페이징 조회하기")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "스탬프 목록 조회 성공", content = @Content(schema = @Schema(implementation = StampListResponse.class)))
+    })
+    public ResponseEntity<StampListResponse> getStampList(
+            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
+            @Parameter(description = "가게 ID") @PathVariable Long storeId
+    ) {
+        // This is a mock implementation
+        List<StampDetailResponse> mockStamps = new ArrayList<>();
+
+        Page<StampDetailResponse> stampPage = new PageImpl<>(mockStamps, PageRequest.of(page, size), 0);
+
+        StampListResponse response = new StampListResponse(
+                stampPage.getContent(),
+                stampPage.getNumber(),
+                stampPage.getSize(),
+                stampPage.getTotalPages(),
+                stampPage.getTotalElements()
+        );
+        return ResponseEntity.ok(response);
+    }
+
 }
 
