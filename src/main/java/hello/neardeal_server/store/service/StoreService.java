@@ -1,6 +1,7 @@
 package hello.neardeal_server.store.service;
 
 import hello.neardeal_server.member.entity.Owner;
+import hello.neardeal_server.store.StoreCategory;
 import hello.neardeal_server.store.dto.StoreDetailResponse;
 import hello.neardeal_server.store.dto.StoreRequest;
 import hello.neardeal_server.store.entity.Store;
@@ -8,6 +9,8 @@ import hello.neardeal_server.store.repository.StoreRepository;
 import io.swagger.v3.oas.annotations.servers.Server;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,8 +44,9 @@ public class StoreService {
 //        Long owner = 1L;
 
         // 멤버 폴더 생성 (nearDealImage/{memberId})
+        String storeName = request.getStoreName();
         Path memberDir = Paths.get(storagePath)
-                .resolve(String.valueOf(request.getStoreName()))
+                .resolve(String.valueOf(storeName))
                 .normalize()
                 .toAbsolutePath();
         try {
@@ -61,7 +65,7 @@ public class StoreService {
 //            }
 //        }
 
-        String publicUrl = createUrl(request.getStoreName(), file, 0, memberDir);
+        String publicUrl = createUrl(storeName, file, 0, memberDir);
 
         // todo: owner 만든 뒤 해야함
         Store store = Store.create(request, publicUrl, new Owner());
@@ -69,8 +73,6 @@ public class StoreService {
 
         return save.getId();
     }
-
-
 
     // 상점 정보 상세 조회
     public StoreDetailResponse findStoreDetail(Long storeId){
@@ -80,8 +82,22 @@ public class StoreService {
 
     }
 
-    // 상점 전체 목록 조회
+
     // 상점 필터링 목록 조회
+    public Page<StoreDetailResponse> findFilerStore(StoreCategory category, int size, int page){
+
+        if(category == null){
+            Page<Store> all = storeRepository.findAll(PageRequest.of(page, size));
+
+            return all.map(store -> StoreDetailResponse.entityToResponse(store));
+        }else {
+            Page<Store> all = storeRepository.findByCategory(category, PageRequest.of(page, size));
+
+            return all.map(store -> StoreDetailResponse.entityToResponse(store));
+        }
+
+    }
+
     // 상점 정보 수정
     // 상점 정보 삭제
     // 내 가게 스탬프 목록 조회

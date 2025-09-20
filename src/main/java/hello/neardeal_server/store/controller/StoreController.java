@@ -3,6 +3,7 @@ package hello.neardeal_server.store.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hello.neardeal_server.stamp.dto.StampDetailResponse;
 import hello.neardeal_server.stamp.dto.StampListResponse;
+import hello.neardeal_server.store.StoreCategory;
 import hello.neardeal_server.store.dto.StoreDetailResponse;
 import hello.neardeal_server.store.dto.StoreListResponse;
 import hello.neardeal_server.store.dto.StoreRequest;
@@ -70,54 +71,21 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.OK).body(storeDetail);
     }
 
+
     @GetMapping
-    @Operation(summary = "[소비자]상점 전체 목록 조회", description = "상점 전체 목록 페이징 조회하기")
+    @Operation(summary = "[소비자]상점 필터링 목록 조회", description = "상점 필터링 목록 페이징 조회하기, 카테고리 안넣으면 전체 조회")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreListResponse.class)))
     })
-    public ResponseEntity<StoreListResponse> getStoreList(
-            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
-    ) {
-        // This is a mock implementation
-        List<StoreDetailResponse> mockStores = new ArrayList<>();
-
-        Page<StoreDetailResponse> storePage = new PageImpl<>(mockStores, PageRequest.of(page, size), 0);
-
-        StoreListResponse response = new StoreListResponse(
-                storePage.getContent(),
-                storePage.getNumber(),
-                storePage.getSize(),
-                storePage.getTotalPages(),
-                storePage.getTotalElements()
-        );
-        return ResponseEntity.ok(response);
-    }
-
-
-    @GetMapping("/filter")
-    @Operation(summary = "[소비자]상점 필터링 목록 조회", description = "상점 필터링 목록 페이징 조회하기")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreListResponse.class)))
-    })
-    public ResponseEntity<StoreListResponse> getStoreList(
+    public ResponseEntity<Page<StoreDetailResponse>> getStoreList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
-            @Parameter(description = "필터링 할 카테고리") @RequestParam String category
+            @Parameter(description = "필터링 할 카테고리") @RequestParam(required = false) StoreCategory category
     ) {
-        // This is a mock implementation
-        List<StoreDetailResponse> mockStores = new ArrayList<>();
 
-        Page<StoreDetailResponse> storePage = new PageImpl<>(mockStores, PageRequest.of(page, size), 0);
+        Page<StoreDetailResponse> filerStore = storeService.findFilerStore(category, size, page);
 
-        StoreListResponse response = new StoreListResponse(
-                storePage.getContent(),
-                storePage.getNumber(),
-                storePage.getSize(),
-                storePage.getTotalPages(),
-                storePage.getTotalElements()
-        );
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(filerStore);
     }
 
 

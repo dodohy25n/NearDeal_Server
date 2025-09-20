@@ -15,7 +15,7 @@ public class StoreRequest {
     private String storeName;
 
     @Schema(description = "카테고리")
-    private String category;
+    private StoreCategory category;
 
     @Schema(description = "영업시간")
     private DurationTime openingTime;

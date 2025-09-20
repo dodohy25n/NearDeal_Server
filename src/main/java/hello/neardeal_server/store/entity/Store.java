@@ -94,7 +94,7 @@ public class Store {
     public static Store create(StoreRequest request, String imageUrls, Owner owner){
         Store store = new Store();
         store.storeName = request.getStoreName();
-        store.category = StoreCategory.valueOf(request.getCategory());
+        store.category = request.getCategory();
         store.openingTime = request.getOpeningTime();
         store.breakTime = request.getBreakTime();
         store.address = request.getAddress();
@@ -116,7 +116,7 @@ public class Store {
      */
     public Long updateStore(StoreRequest request, String imageUrls){
         this.storeName = request.getStoreName();
-        this.category = StoreCategory.valueOf(request.getCategory());
+        this.category = request.getCategory();
         this.openingTime = request.getOpeningTime();
         this.breakTime = request.getBreakTime();
         this.address = request.getAddress();
