@@ -6,8 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Schema(description = "회원가입 요청")
-public class SignupRequest {
+@Schema(description = "회원 정보 수정 요청")
+public class MemberUpdateRequest {
 
     @Schema(description = "이름")
     private String name;
@@ -24,9 +24,6 @@ public class SignupRequest {
     @Schema(description = "전화번호")
     private String phone;
 
-    @Schema(description = "고객 ID")
-    private Long customerId;
-
-    @Schema(description = "점주 ID")
-    private Long ownerId;
+    @Schema(description = "소속 (고객인 경우)")
+    private String affiliation;
 }

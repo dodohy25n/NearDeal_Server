@@ -2,7 +2,6 @@ package hello.neardeal_server.coupon.entity;
 
 import hello.neardeal_server.item.entity.Item;
 import hello.neardeal_server.member.entity.PartnerCategory;
-import hello.neardeal_server.store.entity.Store;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -59,19 +58,20 @@ public class Coupon {
     @Column(nullable = false)
     private Timestamp couponEndDate;    // 쿠폰 적용 마감 일시
 
-    private PartnerCategory partnerCategory;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private PartnerCategory partnerCategory = PartnerCategory.NONE;
 
     @CreationTimestamp
     private Timestamp createdAt;
 
 
     /* --- 관계 --- */
-    @OneToOne
-    @JoinColumn(name = "item_id")
+    @OneToOne(mappedBy = "coupon")
     private Item item;
 
-    @ManyToOne
-    @JoinColumn(name = "store_id")
-    private Store store;
+//    @ManyToOne
+//    @JoinColumn(name = "store_id")
+//    private Store store;
 
 }

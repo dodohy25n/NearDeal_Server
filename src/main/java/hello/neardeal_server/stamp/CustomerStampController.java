@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Tag(name = "소비자-스탬프 매핑 컨트롤러", description = "소비자-스탬프 관련 API 엔드포인트")
+@Tag(name = "고객-스탬프 매핑 컨트롤러", description = "고객-스탬프 관련 API 엔드포인트")
 @RequestMapping("/api/customer-stamp")
 @RestController
 public class CustomerStampController {
 
     @PostMapping("/{stampId}/save")
-    @Operation(summary = "[소비자]스탬프 적립", description = "스탬프 적립하기")
+    @Operation(summary = "[고객]스탬프 적립", description = "스탬프 적립하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "스탬프 적립 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
@@ -35,7 +35,7 @@ public class CustomerStampController {
     }
 
     @PatchMapping("/{stampId}/visible")
-    @Operation(summary = "[소비자]스탬프 숨기기 / 보이기", description = "스탬프 숨김 또는 보임 설정하기")
+    @Operation(summary = "[고객]스탬프 숨기기 / 보이기", description = "스탬프 숨김 또는 보임 설정하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "스탬프 상태 변경 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
@@ -46,7 +46,7 @@ public class CustomerStampController {
     }
 
     @GetMapping("/my")
-    @Operation(summary = "[소비자]내가 적립한 스탬프 목록 조회", description = "내 적립 스탬프 목록 페이징 조회하기")
+    @Operation(summary = "[고객]내가 적립한 스탬프 목록 조회", description = "내 적립 스탬프 목록 페이징 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "스탬프 정보 조회 성공", content = @Content(schema = @Schema(implementation = StampDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")

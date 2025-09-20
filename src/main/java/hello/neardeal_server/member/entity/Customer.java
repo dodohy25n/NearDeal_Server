@@ -1,6 +1,7 @@
 package hello.neardeal_server.member.entity;
 
 import hello.neardeal_server.coupon.entity.CustomerCoupon;
+import hello.neardeal_server.member.dto.CustomerRequest;
 import hello.neardeal_server.stamp.entity.CustomerStamp;
 import hello.neardeal_server.store.entity.CustomerStore;
 import jakarta.persistence.*;
@@ -25,9 +26,6 @@ public class Customer {
     private PartnerCategory affiliation = PartnerCategory.NONE; // 소속
 
     /* --- 관계 --- */
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
 
     @OneToMany(mappedBy = "customer")
     private List<CustomerStamp> customerStampList = new ArrayList<>();
@@ -37,4 +35,18 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<CustomerStore> customerStoreList = new ArrayList<>();
+
+    /* --- 메서드 --- */
+
+    public static Customer create(CustomerRequest customerRequest) {
+        Customer customer = new Customer();
+        customer.affiliation = PartnerCategory.valueOf(customerRequest.getAffiliation());
+        return customer;
+    }
+
+    public void update(hello.neardeal_server.member.dto.MemberUpdateRequest request) {
+        if (request.getAffiliation() != null) {
+            this.affiliation = PartnerCategory.valueOf(request.getAffiliation());
+        }
+    }
 }

@@ -36,7 +36,7 @@ public class StampController {
     }
 
     @GetMapping("/{stampId}")
-    @Operation(summary = "[점주/소비자]스탬프 정보 조회", description = "스탬프 정보 조회하기")
+    @Operation(summary = "[점주/고객]스탬프 정보 조회", description = "스탬프 정보 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "스탬프 정보 조회 성공", content = @Content(schema = @Schema(implementation = StampDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")

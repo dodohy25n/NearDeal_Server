@@ -17,6 +17,8 @@ public class Item {
     private Long id;
 
     /* --- 관계 --- */
-    @OneToOne(mappedBy = "coupon")
+
+    @OneToOne
+    @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 }

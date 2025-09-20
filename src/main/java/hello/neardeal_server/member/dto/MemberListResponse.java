@@ -1,14 +1,15 @@
 package hello.neardeal_server.member.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
+@Builder
 @Getter
-@AllArgsConstructor
 @Schema(description = "회원 페이징 목록 정보")
+@AllArgsConstructor()
 public class MemberListResponse {
 
     @Schema(description = "회원 목록")
@@ -25,4 +26,15 @@ public class MemberListResponse {
 
     @Schema(description = "전체 데이터 수")
     private final long totalElements;
+
+    public static MemberListResponse of(Page<MemberDetailResponse> memberDetailResponsePage) {
+        return MemberListResponse.builder()
+                .members(memberDetailResponsePage.getContent())
+                .page(memberDetailResponsePage.getNumber() + 1)
+                .size(memberDetailResponsePage.getSize())
+                .totalPages(memberDetailResponsePage.getTotalPages())
+                .totalElements(memberDetailResponsePage.getTotalElements())
+                .build();
+    }
+
 }

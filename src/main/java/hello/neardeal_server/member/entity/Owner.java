@@ -14,4 +14,8 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "owner_id")
     private Long id;
+
+    @OneToOne(mappedBy = "owner")
+    private Member member;
+
 }
