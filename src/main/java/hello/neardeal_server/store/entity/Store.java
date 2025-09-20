@@ -92,7 +92,7 @@ public class Store {
     }
 
     // == 생성자 메서드 == //
-    public static Store create(StoreRequest request, String imageUrls){
+    public static Store create(StoreRequest request, String imageUrls, Owner owner){
         Store store = new Store();
         store.storeName = request.getStoreName();
         store.category = request.getCategory();
@@ -104,8 +104,8 @@ public class Store {
         store.lng = request.getLng();
         store.imageUrl = imageUrls;
         store.likeCount = 0;
-// todo:
-//        store.addOwner(owner);
+        
+        store.addOwner(owner);
 
         return store;
     }

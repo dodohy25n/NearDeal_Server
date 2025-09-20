@@ -28,15 +28,18 @@ public class MemberService  {
     private final OwnerRepository ownerRepository;
     //private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /**
+     * 회원가입
+     */
     public Long signup(SignupRequest signupRequest) {
         //signupRequest.setPassword(bcryptPasswordEncoder.encode(signupRequest.getPassword()));
         if (signupRequest.getOwnerId() != null) {
-            Owner owner = ownerRepository.findById(signupRequest.getOwnerId()).orElseThrow(() -> new EntityNotFoundException("Owner not found"));
+            Owner owner = findOneOwner(signupRequest.getOwnerId());
             Member member = Member.createOwnerMember(signupRequest, owner);
             Member savedMember = memberRepository.save(member);
             return savedMember.getId();
         } else if (signupRequest.getCustomerId() != null) {
-            Customer customer = customerRepository.findById(signupRequest.getCustomerId()).orElseThrow(() -> new EntityNotFoundException("Customer not found"));
+            Customer customer = findOneCustomer(signupRequest.getCustomerId());
             Member member = Member.createCustomerMember(signupRequest, customer);
             Member savedMember = memberRepository.save(member);
             return savedMember.getId();
@@ -45,17 +48,17 @@ public class MemberService  {
         }
     }
 
-    public Long registerCustomer(CustomerRequest customerRequest) {
-        Customer customer = Customer.create(customerRequest);
-        Customer savedCustomer = customerRepository.save(customer);
-        return savedCustomer.getId();
-    }
-
+    /**
+     * 회원정보 조회
+     */
     public MemberDetailResponse getMemberDetail(Long memberId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new EntityNotFoundException("Member not found"));
         return MemberDetailResponse.entityToResponse(member);
     }
 
+    /**
+     * 전체회원 목록 조회
+     */
     public MemberListResponse getMemberList(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Member> members = memberRepository.findAll(pageRequest);
@@ -63,6 +66,9 @@ public class MemberService  {
         return MemberListResponse.of(memberDetailResponsePage);
     }
 
+    /**
+     * member 정보 변경
+     */
     public MemberDetailResponse updateMember(Long memberId, MemberUpdateRequest request) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("Member not found"));
@@ -70,7 +76,7 @@ public class MemberService  {
         member.update(request);
 
         if (member.getCustomer() != null) {
-            member.getCustomer().update(request);
+            member.getCustomer().update(request.getAffiliation());
         } else if (member.getOwner() != null) {
             //member.getOwner().update(request);
         }else {
@@ -80,7 +86,93 @@ public class MemberService  {
         return MemberDetailResponse.entityToResponse(member);
     }
 
+    /**
+     * Customer 회원가입
+     */
+    public Long registerCustomer(CustomerRequest customerRequest) {
+        Customer customer = Customer.create(customerRequest);
+        Customer savedCustomer = customerRepository.save(customer);
+        return savedCustomer.getId();
+    }
+    /**
+     * Customer 정보 조회
+     */
+    public CustomerDetailResponse getCustomerDetail(Long customerId){
+        //todo: 시큐리티에서 customerId 받아오기
+        Customer findCustomer = findOneCustomer(customerId);
+        return CustomerDetailResponse.entityToResponse(findCustomer);
+    }
+    /**
+     * Customer 목록 조회
+     */
+    public Page<CustomerDetailResponse> getCustomerList(int page, int size){
+        Page<Customer> all = customerRepository.findAll(PageRequest.of(page, size));
+        return all.map(customer -> CustomerDetailResponse.entityToResponse(customer));
+    }
+    /**
+     * Customer 정보 변경
+     */
+    public void updateCustomer(Long customerId, CustomerRequest request){
+        //todo: 시큐리티에서 customerId 받아오기
+        Customer findCustomer = findOneCustomer(customerId);
+        findCustomer.update(request.getAffiliation());
+    }
+    /**
+     * Customer 삭제
+     */
+    public void deleteCustomer(Long customerId){
+        //todo: 시큐리티에서 customerId 받아오기
+        Customer customer = findOneCustomer(customerId);
+        customerRepository.delete(customer);
+    }
+
+
+
+    /**
+     * Owner 회원가입
+     */
+    public Long registerOwner(OwnerRequest request){
+        Owner owner = Owner.create(request);
+        Owner save = ownerRepository.save(owner);
+        return save.getId();
+    }
+    /**
+     * Owner 정보 조회
+     */
+    public OwnerDetailResponse getOwnerDetail(Long ownerId){
+        //todo: 시큐리티에서 ownerId 받아오기
+        Owner findOwner = findOneOwner(ownerId);
+        return OwnerDetailResponse.entityToResponse(findOwner);
+    }
+    /**
+     * Owner 목록 조회
+     */
+    public Page<OwnerDetailResponse> getOwnerList(int page, int size){
+        Page<Owner> all = ownerRepository.findAll(PageRequest.of(page, size));
+        return all.map(owner -> OwnerDetailResponse.entityToResponse(owner));
+    }
+    /**
+     * Owner 정보 변경
+     */
+    public Long updateOwner(Long ownerId, OwnerRequest request){
+        //todo: 시큐리티에서 ownerId 받아오기
+        Owner findOwner = findOneOwner(ownerId);
+        return findOwner.updateInfo(request);
+    }
+    /**
+     * Owner 삭제
+     */
+    public void deleteOwner(Long ownerId){
+        //todo: 시큐리티에서 ownerId 받아오기
+        Owner owner = findOneOwner(ownerId);
+        ownerRepository.delete(owner);
+    }
+
     public Customer findOneCustomer(Long customerId){
         return customerRepository.findById(customerId).orElseThrow(()-> new RuntimeException("customer 없습니다"));
+    }
+
+    public Owner findOneOwner(Long ownerId){
+        return ownerRepository.findById(ownerId).orElseThrow(()-> new RuntimeException("Owner 없습니다"));
     }
 }

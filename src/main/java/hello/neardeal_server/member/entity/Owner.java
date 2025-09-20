@@ -1,5 +1,6 @@
 package hello.neardeal_server.member.entity;
 
+import hello.neardeal_server.member.dto.OwnerRequest;
 import hello.neardeal_server.store.entity.Store;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.ALL;
-import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -22,13 +22,27 @@ public class Owner {
     @Column(name = "owner_id")
     private Long id;
 
-    @OneToOne(mappedBy = "owner", fetch = LAZY)
-    private Member member;
+    private Integer businessNumber;
+
     // == 연관관계 == //
+
     @OneToMany(mappedBy = "owner", cascade = ALL)
     private List<Store> stores = new ArrayList<>();
 
-    // todo: owner 만든 뒤 store저장 해야함
+    // == 생성 메서드 == //
+    public static Owner create(OwnerRequest request){
+        Owner owner = new Owner();
+        owner.businessNumber = request.getBusinessNumber();
+
+        return owner;
+    }
+
+    // == 비즈니스 로직 == //
+    public Long updateInfo(OwnerRequest request){
+        this.businessNumber = request.getBusinessNumber();
+        return this.id;
+    }
+
 
 
 }
