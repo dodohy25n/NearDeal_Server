@@ -1,5 +1,6 @@
 package hello.neardeal_server.store.entity;
 
+import hello.neardeal_server.common.auditing.BaseEntity;
 import hello.neardeal_server.member.entity.Customer;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CustomerStore {
+public class CustomerStore extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

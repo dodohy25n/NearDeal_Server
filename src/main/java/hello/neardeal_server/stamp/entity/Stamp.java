@@ -1,5 +1,6 @@
 package hello.neardeal_server.stamp.entity;
 
+import hello.neardeal_server.common.auditing.BaseEntity;
 import hello.neardeal_server.stamp.dto.request.StampRequest;
 import hello.neardeal_server.store.entity.Store;
 import jakarta.persistence.*;
@@ -13,7 +14,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Stamp {
+public class Stamp extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

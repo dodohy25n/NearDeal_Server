@@ -1,6 +1,6 @@
 package hello.neardeal_server.store.service;
 
-import hello.neardeal_server.file.FileStorage;
+import hello.neardeal_server.common.file.FileStorage;
 import hello.neardeal_server.member.entity.Owner;
 import hello.neardeal_server.member.repository.MemberRepository;
 import hello.neardeal_server.member.service.MemberService;
@@ -32,10 +32,10 @@ public class StoreService {
     /**
      * 상점 등록
      * */
-    public Long createStore(StoreRequest request){
+    public Long createStore(StoreRequest request, Long ownerId){
         
         // todo: owner 시큐리티에서 불러오기
-        Long ownerId = 1L;
+//        Long ownerId = 1L;
         Owner owner = memberService.findOneOwner(ownerId);
         String publicUrl = createImageUrl(request.getImage(), request.getStoreName());
 

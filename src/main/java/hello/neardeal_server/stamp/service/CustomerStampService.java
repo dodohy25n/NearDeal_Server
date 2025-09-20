@@ -34,11 +34,11 @@ public class CustomerStampService {
      * 스탬프 신청하기
      */
     @Transactional
-    public Long requestStamp(Long stampId){
+    public Long requestStamp(Long stampId, Long customerId){
         Stamp stamp = stampService.findOne(stampId);
 
         // todo: customer 시큐리티 이용해서 받아오기
-        Customer customer = memberService.findOneCustomer(1L);
+        Customer customer = memberService.findOneCustomer(customerId);
 
         boolean exist = customerStampRepository.existsByCustomerAndStamp(customer, stamp);
         if(exist){
@@ -82,7 +82,7 @@ public class CustomerStampService {
 
         Pageable pageable = PageRequest.of(
                 page, size,
-                Sort.by(Sort.Order.desc("visible")) // 보이는 것 먼저 정렬하기
+                Sort.by(Sort.Order.desc("isVisible")) // 보이는 것 먼저 정렬하기
         );
         Page<CustomerStamp> all = customerStampRepository.findByCustomer(customer, pageable);
 

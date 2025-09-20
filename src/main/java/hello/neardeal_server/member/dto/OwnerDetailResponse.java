@@ -12,7 +12,7 @@ public class OwnerDetailResponse {
     @Schema(description = "점주 ID")
     private Long id;
 
-    private int businessNumber;
+    private String businessNumber;
 
     public static OwnerDetailResponse entityToResponse(Owner owner) {
 

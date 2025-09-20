@@ -25,17 +25,18 @@ public class StoreController {
 
     private final StoreService storeService;
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(path = "/{ownerId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "[점주]상점 등록", description = "새 상점 등록 하기, form-data로 보내야함, store, files 분리시켜서")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "새로운 상점 등록 성공"),
             @ApiResponse(responseCode = "400", description = "상점 등록 실패")
     })
     public ResponseEntity<Long> createStore(
-            @ModelAttribute StoreRequest storeRequest
+            @ModelAttribute StoreRequest storeRequest,
+            @PathVariable Long ownerId
     ) {
 
-        Long storeId = storeService.createStore(storeRequest);
+        Long storeId = storeService.createStore(storeRequest, ownerId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(storeId);
     }

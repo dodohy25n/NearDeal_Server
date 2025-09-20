@@ -1,5 +1,6 @@
 package hello.neardeal_server.item.entity;
 
+import hello.neardeal_server.common.auditing.BaseEntity;
 import hello.neardeal_server.coupon.entity.Coupon;
 import hello.neardeal_server.item.dto.request.ItemRequest;
 import hello.neardeal_server.store.entity.Store;
@@ -13,7 +14,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item {
+public class Item extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "item_id")

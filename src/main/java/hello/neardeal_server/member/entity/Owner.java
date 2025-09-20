@@ -22,7 +22,7 @@ public class Owner {
     @Column(name = "owner_id")
     private Long id;
 
-    private Integer businessNumber;
+    private String businessNumber;
 
     // == 연관관계 == //
 
