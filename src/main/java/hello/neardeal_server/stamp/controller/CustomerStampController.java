@@ -1,4 +1,4 @@
-package hello.neardeal_server.stamp;
+package hello.neardeal_server.stamp.controller;
 
 import hello.neardeal_server.stamp.dto.StampDetailResponse;
 import hello.neardeal_server.stamp.dto.StampListResponse;

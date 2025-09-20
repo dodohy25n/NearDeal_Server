@@ -1,16 +1,22 @@
-//package hello.neardeal_server;
-//
-//import jakarta.persistence.Embeddable;
-//import lombok.Getter;
-//
-//import java.time.LocalDateTime;
-//
-//@Embeddable
-//@Getter
-//public class DurationTime {
-//
-//    private LocalDateTime startTime;
-//    private LocalDateTime endTime;
-//
-//
-//}
+package hello.neardeal_server;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalTime;
+
+@Embeddable
+@Getter @Setter
+@NoArgsConstructor
+@Schema(description = "시작/종료 시각")
+public class DurationTime {
+
+
+    private LocalTime startTime;
+
+    private LocalTime endTime;
+
+}

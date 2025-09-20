@@ -3,6 +3,7 @@ package hello.neardeal_server.item.controller;
 import hello.neardeal_server.item.dto.ItemDetailResponse;
 import hello.neardeal_server.item.dto.ItemListResponse;
 import hello.neardeal_server.item.dto.ItemRequest;
+import hello.neardeal_server.item.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +26,24 @@ import java.util.List;
 @RestController
 public class ItemController {
 
-    @PostMapping
+    private final ItemService itemService;
+
+    public ItemController(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
+    @PostMapping("/{storeId}")
     @Operation(summary = "상품 등록", description = "새 상품 등록 하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "새로운 상품 등록 성공"),
             @ApiResponse(responseCode = "400", description = "상품 등록 실패")
     })
-    public ResponseEntity<Object> createItem(@RequestBody ItemRequest itemRequest) {
-        return null;
+    public ResponseEntity<Long> createItem(
+            @ModelAttribute ItemRequest itemRequest,
+            @PathVariable("storeId") Long storeId
+    ) {
+        Long itemId = itemService.createItem(itemRequest, storeId);
+        return ResponseEntity.ok(itemId);
     }
 
     @GetMapping("/{itemId}")

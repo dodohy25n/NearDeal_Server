@@ -1,7 +1,6 @@
-package hello.neardeal_server.stamp;
+package hello.neardeal_server.stamp.controller;
 
 import hello.neardeal_server.stamp.dto.StampDetailResponse;
-import hello.neardeal_server.stamp.dto.StampListResponse;
 import hello.neardeal_server.stamp.dto.StampRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,15 +9,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 @Tag(name = "스탬프 컨트롤러", description = "스탬프 관련 API 엔드포인트")
 @RequestMapping("/api/stamp")
