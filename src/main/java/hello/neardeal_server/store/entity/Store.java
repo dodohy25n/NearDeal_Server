@@ -16,6 +16,9 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -48,16 +51,29 @@ public class Store {
 
     private String introduce;
 
-    private double score;
+    private double score; // 별점
+
+    private float lat;
+    private float lng;
+    
+    // todo: 등록날자
 
     // == 연관관계 == //
+    @OneToMany(mappedBy = "store", cascade = ALL)
     private List<Item> items = new ArrayList<>();
-    private List<Coupon> coupons = new ArrayList<>();
+    @OneToMany(mappedBy = "store", cascade = ALL)
     private List<Stamp> stamps = new ArrayList<>();
-    private List<Review> reviews = new ArrayList<>();
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "owner_id")
     private Owner owner;
+//    @OneToMany(mappedBy = "store", cascade = ALL)
+//    private List<Coupon> coupons = new ArrayList<>();
+
+//    private List<Review> reviews = new ArrayList<>();
 
     // == 연관관계 편의 메서드 == //
+
     // == 생성자 메서드 == //
     // == 비즈니스 로직 == //
 
