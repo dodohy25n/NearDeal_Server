@@ -1,4 +1,4 @@
-package hello.neardeal_server;
+package hello.neardeal_server.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;

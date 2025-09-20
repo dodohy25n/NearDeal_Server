@@ -1,5 +1,6 @@
 package hello.neardeal_server.item.controller;
 
+import hello.neardeal_server.common.PageResponse;
 import hello.neardeal_server.item.dto.ItemDetailResponse;
 import hello.neardeal_server.item.dto.ItemListResponse;
 import hello.neardeal_server.item.dto.ItemRequest;
@@ -12,14 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Tag(name = "상품 컨트롤러", description = "상품 관련 API 엔드포인트")
 @RequestMapping("/api/item")
@@ -46,39 +41,32 @@ public class ItemController {
         return ResponseEntity.ok(itemId);
     }
 
-    @GetMapping("/{itemId}")
-    @Operation(summary = "상품 정보 조회", description = "상품 정보 조회하기")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "상품 정보 조회 성공", content = @Content(schema = @Schema(implementation = ItemDetailResponse.class))),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
-    })
-    @Parameter(name = "itemId", description = "상품 ID", required = true)
-    public ResponseEntity<ItemDetailResponse> getItemDetail(@PathVariable Long itemId) {
-        return null;
-    }
+//    @GetMapping("/{itemId}")
+//    @Operation(summary = "상품 정보 조회", description = "상품 정보 조회하기")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "상품 정보 조회 성공", content = @Content(schema = @Schema(implementation = ItemDetailResponse.class))),
+//            @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
+//    })
+//    @Parameter(name = "itemId", description = "상품 ID", required = true)
+//    public ResponseEntity<ItemDetailResponse> getItemDetail(@PathVariable Long itemId) {
+//        return null;
+//    }
 
-    @GetMapping
+    @GetMapping("/{storeId}")
     @Operation(summary = "상품 목록 조회", description = "상품 목록 페이징 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "상품 목록 조회 성공", content = @Content(schema = @Schema(implementation = ItemListResponse.class)))
     })
-    public ResponseEntity<ItemListResponse> getItemList(
+    public ResponseEntity<PageResponse<ItemDetailResponse>> getItemList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
+            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
+            @PathVariable(name = "storeId") Long storeId
     ) {
-        // This is a mock implementation
-        List<ItemDetailResponse> mockItems = new ArrayList<>();
+        Page<ItemDetailResponse> itemPage = itemService.findList(storeId, page, size);
 
-        Page<ItemDetailResponse> itemPage = new PageImpl<>(mockItems, PageRequest.of(page, size), 0);
+        PageResponse<ItemDetailResponse> result = PageResponse.pageToResponse(itemPage);
 
-        ItemListResponse response = new ItemListResponse(
-                itemPage.getContent(),
-                itemPage.getNumber(),
-                itemPage.getSize(),
-                itemPage.getTotalPages(),
-                itemPage.getTotalElements()
-        );
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(result);
     }
 
     @PutMapping("/{itemId}")

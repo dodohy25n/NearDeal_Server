@@ -1,12 +1,15 @@
 package hello.neardeal_server.item.service;
 
 import hello.neardeal_server.file.FileStorage;
+import hello.neardeal_server.item.dto.ItemDetailResponse;
 import hello.neardeal_server.item.dto.ItemRequest;
 import hello.neardeal_server.item.entity.Item;
 import hello.neardeal_server.item.repository.ItemRepository;
 import hello.neardeal_server.store.entity.Store;
 import hello.neardeal_server.store.service.StoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +23,9 @@ public class ItemService {
     private final StoreService storeService;
     private final ItemRepository itemRepository;
 
+    /**
+     * 아이템 만들기
+     */
     @Transactional
     public Long createItem(ItemRequest itemRequest, Long storeId){
         Store store = storeService.findOne(storeId);
@@ -37,6 +43,21 @@ public class ItemService {
         Item save = itemRepository.save(item);
 
         return save.getId();
-
     }
+
+    /**
+     * 아이템 전체 조회하기
+     */
+    public Page<ItemDetailResponse> findList(Long storeId, int page, int size){
+        Store store = storeService.findOne(storeId);
+
+        Page<Item> all = itemRepository.findByStore(store, PageRequest.of(page, size));
+        return all.map(item -> ItemDetailResponse.entityToResponse(item));
+    }
+
+    public Item findOne(Long itemId){
+        return itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("아이템 없으무이다"));
+    }
+
+
 }

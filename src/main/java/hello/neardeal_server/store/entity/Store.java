@@ -1,6 +1,6 @@
 package hello.neardeal_server.store.entity;
 
-import hello.neardeal_server.DurationTime;
+import hello.neardeal_server.common.DurationTime;
 import hello.neardeal_server.item.entity.Item;
 import hello.neardeal_server.member.entity.Owner;
 import hello.neardeal_server.stamp.entity.Stamp;

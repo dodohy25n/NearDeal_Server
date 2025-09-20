@@ -1,10 +1,8 @@
 package hello.neardeal_server.store.dto;
 
-import hello.neardeal_server.DurationTime;
+import hello.neardeal_server.common.DurationTime;
 import hello.neardeal_server.store.StoreCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
