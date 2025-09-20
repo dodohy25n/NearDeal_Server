@@ -1,4 +1,4 @@
-package hello.neardeal_server.item.dto;
+package hello.neardeal_server.item.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

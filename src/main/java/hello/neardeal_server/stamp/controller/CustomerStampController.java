@@ -1,7 +1,8 @@
 package hello.neardeal_server.stamp.controller;
 
-import hello.neardeal_server.stamp.dto.StampDetailResponse;
-import hello.neardeal_server.stamp.dto.StampListResponse;
+import hello.neardeal_server.common.PageResponse;
+import hello.neardeal_server.stamp.dto.response.StampInfoResponse;
+import hello.neardeal_server.stamp.dto.response.StampListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -48,7 +49,7 @@ public class CustomerStampController {
     @GetMapping("/my")
     @Operation(summary = "[고객]내가 적립한 스탬프 목록 조회", description = "내 적립 스탬프 목록 페이징 조회하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "스탬프 정보 조회 성공", content = @Content(schema = @Schema(implementation = StampDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "스탬프 정보 조회 성공", content = @Content(schema = @Schema(implementation = StampInfoResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
     })
     public ResponseEntity<StampListResponse> getStampList(
@@ -56,9 +57,9 @@ public class CustomerStampController {
             @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
     ) {
         // This is a mock implementation
-        List<StampDetailResponse> mockStamps = new ArrayList<>();
+        List<StampInfoResponse> mockStamps = new ArrayList<>();
 
-        Page<StampDetailResponse> stampPage = new PageImpl<>(mockStamps, PageRequest.of(page, size), 0);
+        Page<StampInfoResponse> stampPage = new PageImpl<>(mockStamps, PageRequest.of(page, size), 0);
 
         StampListResponse response = new StampListResponse(
                 stampPage.getContent(),
@@ -68,6 +69,25 @@ public class CustomerStampController {
                 stampPage.getTotalElements()
         );
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{storeId}/stamp")
+    @Operation(summary = "[점주]내 가게 스탬프 목록 조회", description = "내 가게 스탬프 목록 페이징 조회하기")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "스탬프 목록 조회 성공", content = @Content(schema = @Schema(implementation = StampListResponse.class)))
+    })
+    public ResponseEntity<PageResponse<StampInfoResponse>> getStampList(
+            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
+            @Parameter(description = "가게 ID") @PathVariable Long storeId
+    ) {
+        // This is a mock implementation
+        List<StampInfoResponse> mockStamps = new ArrayList<>();
+
+        Page<StampInfoResponse> stampPage = new PageImpl<>(mockStamps, PageRequest.of(page, size), 0);
+
+        PageResponse<StampInfoResponse> result = PageResponse.pageToResponse(stampPage);
+        return ResponseEntity.ok(result);
     }
 
 }

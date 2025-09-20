@@ -1,9 +1,8 @@
 package hello.neardeal_server.item.controller;
 
 import hello.neardeal_server.common.PageResponse;
-import hello.neardeal_server.item.dto.ItemDetailResponse;
-import hello.neardeal_server.item.dto.ItemListResponse;
-import hello.neardeal_server.item.dto.ItemRequest;
+import hello.neardeal_server.item.dto.response.ItemDetailResponse;
+import hello.neardeal_server.item.dto.request.ItemRequest;
 import hello.neardeal_server.item.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -56,7 +55,7 @@ public class ItemController {
     @GetMapping("/{storeId}")
     @Operation(summary = "상품 목록 조회", description = "상품 목록 페이징 조회하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "상품 목록 조회 성공", content = @Content(schema = @Schema(implementation = ItemListResponse.class)))
+            @ApiResponse(responseCode = "200", description = "상품 목록 조회 성공")
     })
     public ResponseEntity<PageResponse<ItemDetailResponse>> getItemList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
@@ -73,7 +72,7 @@ public class ItemController {
     @PutMapping("/{itemId}")
     @Operation(summary = "상품 정보 수정", description = "상품 정보 수정하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "상품 정보 수정 성공", content = @Content(schema = @Schema(implementation = ItemDetailResponse.class))),
+            @ApiResponse(responseCode = "201", description = "상품 정보 수정 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
     })
     @Parameter(name = "itemId", description = "상품 ID", required = true)
@@ -102,7 +101,7 @@ public class ItemController {
     @PatchMapping("/{itemId}/status")
     @Operation(summary = "상품 품절 상태 변경", description = "상품 품절 상태 변경하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "상품 정보 수정 성공", content = @Content(schema = @Schema(implementation = ItemDetailResponse.class))),
+            @ApiResponse(responseCode = "201", description = "상품 정보 수정 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
     })
     @Parameter(name = "itemId", description = "상품 ID", required = true)

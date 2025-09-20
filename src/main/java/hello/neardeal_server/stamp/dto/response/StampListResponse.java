@@ -1,4 +1,4 @@
-package hello.neardeal_server.stamp.dto;
+package hello.neardeal_server.stamp.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 public class StampListResponse {
 
     @Schema(description = "스탬프 목록")
-    private final List<StampDetailResponse> stamps;
+    private final List<StampInfoResponse> stamps;
 
     @Schema(description = "현재 페이지 번호")
     private final int page;

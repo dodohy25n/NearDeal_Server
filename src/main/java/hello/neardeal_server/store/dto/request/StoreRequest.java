@@ -1,4 +1,4 @@
-package hello.neardeal_server.store.dto;
+package hello.neardeal_server.store.dto.request;
 
 import hello.neardeal_server.common.DurationTime;
 import hello.neardeal_server.store.StoreCategory;

@@ -1,11 +1,11 @@
-package hello.neardeal_server.item.dto;
+package hello.neardeal_server.item.dto.response;
 
 import hello.neardeal_server.item.entity.Item;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder @AllArgsConstructor
+@Getter @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Schema(description = "상품 상세 정보 조회")
 public class ItemDetailResponse {
 

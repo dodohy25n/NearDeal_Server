@@ -2,8 +2,8 @@ package hello.neardeal_server.store.service;
 
 import hello.neardeal_server.file.FileStorage;
 import hello.neardeal_server.store.StoreCategory;
-import hello.neardeal_server.store.dto.StoreDetailResponse;
-import hello.neardeal_server.store.dto.StoreRequest;
+import hello.neardeal_server.store.dto.response.StoreDetailResponse;
+import hello.neardeal_server.store.dto.request.StoreRequest;
 import hello.neardeal_server.store.entity.Store;
 import hello.neardeal_server.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;

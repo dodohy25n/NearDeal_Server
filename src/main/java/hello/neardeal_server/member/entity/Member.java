@@ -5,6 +5,9 @@ import hello.neardeal_server.member.dto.SignupRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,11 +35,11 @@ public class Member {
 
     /* --- 관계 --- */
 
-    @OneToOne()
+    @OneToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToOne()
+    @OneToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
