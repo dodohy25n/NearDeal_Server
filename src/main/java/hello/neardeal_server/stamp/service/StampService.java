@@ -58,7 +58,7 @@ public class StampService {
      * 스탬프 정보 수정
      */
     @Transactional
-    public Long findUpdateStampInfo(Long stampId, StampRequest request){
+    public Long updateStampInfo(Long stampId, StampRequest request){
         Stamp stamp = findOne(stampId);
         return stamp.updateStampInfo(request);
     }
@@ -66,11 +66,20 @@ public class StampService {
     /**
      * 스탬프 비밀번호 조회
      */
+    public String findSecretCode(Long stampId){
+        Stamp stamp = findOne(stampId);
+        return stamp.getSecretCode();
+    }
 
     /**
      * 스탬프 삭제
      */
-//    @Transactional
+    @Transactional
+    public void deleteStampInfo(Long stampId){
+        Stamp stamp = findOne(stampId);
+        stampRepository.delete(stamp);
+    }
+
 
     public Stamp findOne(Long stampId){
         return stampRepository.findById(stampId).orElseThrow(()-> new RuntimeException("스탬프 없어요"));

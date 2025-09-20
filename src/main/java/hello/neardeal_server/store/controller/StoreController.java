@@ -2,13 +2,11 @@ package hello.neardeal_server.store.controller;
 
 import hello.neardeal_server.common.PageResponse;
 import hello.neardeal_server.store.StoreCategory;
-import hello.neardeal_server.store.dto.response.StoreDetailResponse;
 import hello.neardeal_server.store.dto.request.StoreRequest;
+import hello.neardeal_server.store.dto.response.StoreDetailResponse;
 import hello.neardeal_server.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,7 +43,7 @@ public class StoreController {
     @GetMapping("/{storeId}")
     @Operation(summary = "[소비자, 점주]상점 정보 조회", description = "상점 정보 조회하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "상점 정보 조회 성공", content = @Content(schema = @Schema(implementation = StoreDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "상점 정보 조회 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
     })
     @Parameter(name = "storeId", description = "상점 ID", required = true)
@@ -60,7 +58,7 @@ public class StoreController {
     @GetMapping
     @Operation(summary = "[소비자]상점 필터링 목록 조회", description = "상점 필터링 목록 페이징 조회하기, 카테고리 안넣으면 전체 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreDetailResponse.class)))
+            @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공")
     })
     public ResponseEntity<PageResponse<StoreDetailResponse>> getStoreList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
@@ -78,7 +76,7 @@ public class StoreController {
     @PutMapping("/{storeId}")
     @Operation(summary = "[점주]상점 정보 수정", description = "상점 정보 수정하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "상점 정보 수정 성공", content = @Content(schema = @Schema(implementation = StoreDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "상점 정보 수정 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
     })
     @Parameter(name = "storeId", description = "상점 ID", required = true)

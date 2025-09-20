@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
@@ -21,10 +22,10 @@ public class Owner {
     @Column(name = "owner_id")
     private Long id;
 
-    @OneToOne(mappedBy = "owner")
+    @OneToOne(mappedBy = "owner", fetch = LAZY)
     private Member member;
     // == 연관관계 == //
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = ALL)
     private List<Store> stores = new ArrayList<>();
 
     // todo: owner 만든 뒤 store저장 해야함
