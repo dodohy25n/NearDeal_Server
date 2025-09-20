@@ -80,4 +80,9 @@ public class Item {
     }
 
 
+    public Long toggleItemStatus() {
+        this.isSoldOut = !this.isSoldOut;
+        return this.id;
+
+    }
 }

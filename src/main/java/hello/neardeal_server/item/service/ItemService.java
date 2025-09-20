@@ -70,6 +70,26 @@ public class ItemService {
         return item.updateItem(itemRequest, imageUrl);
     }
 
+    /**
+     * 아이템 삭제
+     */
+    @Transactional
+    public void deleteItem(Long itemId){
+        Item item = findOne(itemId);
+        fileStorage.deleteByPublicUrl(item.getImageUrl());
+
+        itemRepository.delete(item);
+    }
+
+    /**
+     * 아이템 품절 상태 변경
+     */
+    @Transactional
+    public Long toggleItemStatus(Long itemId){
+        Item item = findOne(itemId);
+        return item.toggleItemStatus();
+    }
+
 
     public Item findOne(Long itemId){
         return itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("아이템 없으무이다"));

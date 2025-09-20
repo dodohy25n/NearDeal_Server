@@ -92,8 +92,11 @@ public class ItemController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
     })
     @Parameter(name = "itemId", description = "상품 ID", required = true)
-    public ResponseEntity<Void> deleteItem(@PathVariable Long itemId) {
-        return null;
+    public ResponseEntity<String> deleteItem(@PathVariable Long itemId) {
+
+        itemService.deleteItem(itemId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("삭제완료");
     }
 
     @PatchMapping("/{itemId}/status")
@@ -103,7 +106,8 @@ public class ItemController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
     })
     @Parameter(name = "itemId", description = "상품 ID", required = true)
-    public ResponseEntity<Void> updateItemStatus(@PathVariable Long itemId) {
-        return null;
+    public ResponseEntity<Long> updateItemStatus(@PathVariable Long itemId) {
+        Long result = itemService.toggleItemStatus(itemId);
+        return ResponseEntity.ok(result);
     }
 }

@@ -109,7 +109,7 @@ public class StoreController {
     @Parameter(name = "storeId", description = "상점 ID", required = true)
     public ResponseEntity<String> deleteStore(@PathVariable Long storeId) {
         storeService.deleteStore(storeId);
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("상점 삭제완료");
     }
 
 
