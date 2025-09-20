@@ -1,7 +1,7 @@
 package hello.neardeal_server.item.entity;
 
 import hello.neardeal_server.coupon.entity.Coupon;
-import hello.neardeal_server.item.dto.ItemRequest;
+import hello.neardeal_server.item.dto.request.ItemRequest;
 import hello.neardeal_server.store.entity.Store;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -19,17 +19,20 @@ public class Item {
     @Column(name = "item_id")
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = true)
     private String imageUrl;
 
     private Integer price;
 
+    @Column(nullable = false)
     private Boolean isSoldOut;
 
     private String introduce;
 
+    @Column(nullable = false)
     private Boolean isRepresentative;
 
     // == 연관관계 == //

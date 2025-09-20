@@ -1,4 +1,4 @@
-package hello.neardeal_server.store.dto;
+package hello.neardeal_server.store.dto.response;
 
 import hello.neardeal_server.common.DurationTime;
 import hello.neardeal_server.store.StoreCategory;
@@ -7,7 +7,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embedded;
 import lombok.*;
 
-@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED) @AllArgsConstructor
+@Getter @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @Schema(description = "상점 상세 정보 조회")
 public class StoreDetailResponse {

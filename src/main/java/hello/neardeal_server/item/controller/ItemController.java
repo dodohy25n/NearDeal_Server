@@ -1,9 +1,8 @@
 package hello.neardeal_server.item.controller;
 
 import hello.neardeal_server.common.PageResponse;
-import hello.neardeal_server.item.dto.ItemDetailResponse;
-import hello.neardeal_server.item.dto.ItemListResponse;
-import hello.neardeal_server.item.dto.ItemRequest;
+import hello.neardeal_server.item.dto.response.ItemDetailResponse;
+import hello.neardeal_server.item.dto.request.ItemRequest;
 import hello.neardeal_server.item.service.ItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -56,7 +55,7 @@ public class ItemController {
     @GetMapping("/{storeId}")
     @Operation(summary = "상품 목록 조회", description = "상품 목록 페이징 조회하기")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "상품 목록 조회 성공", content = @Content(schema = @Schema(implementation = ItemListResponse.class)))
+            @ApiResponse(responseCode = "200", description = "상품 목록 조회 성공", content = @Content(schema = @Schema(implementation = PageResponse.class)))
     })
     public ResponseEntity<PageResponse<ItemDetailResponse>> getItemList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,

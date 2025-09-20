@@ -1,4 +1,4 @@
-package hello.neardeal_server.stamp.dto;
+package hello.neardeal_server.stamp.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -11,8 +11,9 @@ public class StampRequest {
     private Long storeId;
 
     @Schema(description = "완성 갯수")
-    private int totalCount;
+    private int maxCount;
 
     @Schema(description = "적용 내용")
     private String reward;
+
 }

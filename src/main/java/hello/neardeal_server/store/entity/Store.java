@@ -5,7 +5,7 @@ import hello.neardeal_server.item.entity.Item;
 import hello.neardeal_server.member.entity.Owner;
 import hello.neardeal_server.stamp.entity.Stamp;
 import hello.neardeal_server.store.StoreCategory;
-import hello.neardeal_server.store.dto.StoreRequest;
+import hello.neardeal_server.store.dto.request.StoreRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

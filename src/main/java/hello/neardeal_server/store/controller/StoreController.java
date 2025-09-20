@@ -1,12 +1,9 @@
 package hello.neardeal_server.store.controller;
 
 import hello.neardeal_server.common.PageResponse;
-import hello.neardeal_server.stamp.dto.StampDetailResponse;
-import hello.neardeal_server.stamp.dto.StampListResponse;
 import hello.neardeal_server.store.StoreCategory;
-import hello.neardeal_server.store.dto.StoreDetailResponse;
-import hello.neardeal_server.store.dto.StoreListResponse;
-import hello.neardeal_server.store.dto.StoreRequest;
+import hello.neardeal_server.store.dto.response.StoreDetailResponse;
+import hello.neardeal_server.store.dto.request.StoreRequest;
 import hello.neardeal_server.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,15 +14,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Tag(name = "상점 컨트롤러", description = "상점 관련 API 엔드포인트")
 @RequestMapping("/api/store")
@@ -68,7 +60,7 @@ public class StoreController {
     @GetMapping
     @Operation(summary = "[소비자]상점 필터링 목록 조회", description = "상점 필터링 목록 페이징 조회하기, 카테고리 안넣으면 전체 조회")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreListResponse.class)))
+            @ApiResponse(responseCode = "200", description = "상점 목록 조회 성공", content = @Content(schema = @Schema(implementation = StoreDetailResponse.class)))
     })
     public ResponseEntity<PageResponse<StoreDetailResponse>> getStoreList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
@@ -113,24 +105,7 @@ public class StoreController {
     }
 
 
-    @GetMapping("/{storeId}/stamp")
-    @Operation(summary = "[점주]내 가게 스탬프 목록 조회", description = "내 가게 스탬프 목록 페이징 조회하기")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "스탬프 목록 조회 성공", content = @Content(schema = @Schema(implementation = StampListResponse.class)))
-    })
-    public ResponseEntity<PageResponse<StampDetailResponse>> getStampList(
-            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
-            @Parameter(description = "가게 ID") @PathVariable Long storeId
-    ) {
-        // This is a mock implementation
-        List<StampDetailResponse> mockStamps = new ArrayList<>();
 
-        Page<StampDetailResponse> stampPage = new PageImpl<>(mockStamps, PageRequest.of(page, size), 0);
-
-        PageResponse<StampDetailResponse> result = PageResponse.pageToResponse(stampPage);
-        return ResponseEntity.ok(result);
-    }
 
 }
 
