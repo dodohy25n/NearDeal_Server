@@ -23,6 +23,6 @@ public class Owner {
 
     // == 연관관계 == //
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Store> store = new ArrayList<>();
+    private List<Store> stores = new ArrayList<>();
 
 }
