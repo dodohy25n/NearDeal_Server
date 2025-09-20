@@ -17,6 +17,7 @@ public class StoreRequest {
     @Schema(description = "카테고리")
     private StoreCategory category;
 
+    @Schema(description = "사진")
     private MultipartFile image;
 
     @Schema(description = "영업시간")

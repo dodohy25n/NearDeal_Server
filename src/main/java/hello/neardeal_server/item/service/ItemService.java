@@ -31,7 +31,7 @@ public class ItemService {
         Store store = storeService.findOne(storeId);
         MultipartFile image = itemRequest.getImage();
 
-        String imageUrl =null;
+        String imageUrl = null;
 
         // 이미지가 있을 때만 저장
         if (image != null && !image.isEmpty()) {
@@ -54,6 +54,14 @@ public class ItemService {
         Page<Item> all = itemRepository.findByStore(store, PageRequest.of(page, size));
         return all.map(item -> ItemDetailResponse.entityToResponse(item));
     }
+
+    /**
+     * 아이템 정보 수정
+     */
+//    public Long updateItemInfo(Long itemId, ItemRequest itemRequest){
+//
+//    }
+
 
     public Item findOne(Long itemId){
         return itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("아이템 없으무이다"));

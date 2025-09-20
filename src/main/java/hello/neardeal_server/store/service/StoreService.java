@@ -1,7 +1,6 @@
 package hello.neardeal_server.store.service;
 
 import hello.neardeal_server.file.FileStorage;
-import hello.neardeal_server.member.entity.Owner;
 import hello.neardeal_server.store.StoreCategory;
 import hello.neardeal_server.store.dto.StoreDetailResponse;
 import hello.neardeal_server.store.dto.StoreRequest;
@@ -31,16 +30,7 @@ public class StoreService {
     public Long createStore(StoreRequest request){
 
 //        Long owner = 1L;
-        MultipartFile file = request.getImage();
-
-        // 멤버 폴더 생성 (nearDealImage/{memberId})
-        String storeName = request.getStoreName();
-
-        // 이미지가 있을 때만 저장
-        String publicUrl = null;
-        if (file != null && !file.isEmpty()) {
-            publicUrl = fileStorage.createUrl(storeName, file, 0);
-        }
+        String publicUrl = createImageUrl(request.getImage(), request.getStoreName());
 
         // todo: owner 만든 뒤 owner 넣어서 new 대신 해야함
         Store store = Store.create(request, publicUrl);
@@ -80,10 +70,19 @@ public class StoreService {
      * 상점 정보 수정
      * */
     @Transactional
-    public Long updateStoreInfo(Long storeId, StoreRequest storeRequest){
+    public Long updateStoreInfo(Long storeId, StoreRequest request){
         Store store = findOne(storeId);
-        return store.updateStore(storeRequest);
+
+        String imageUrl = createImageUrl(request.getImage(), request.getStoreName() );
+        
+        // url 없으면 삭제하기
+        if (imageUrl == null) {
+            fileStorage.deleteByPublicUrl(store.getImageUrl());
+        }
+        
+        return store.updateStore(request, imageUrl);
     }
+
 
     /**
      * 상점 정보 삭제
@@ -110,5 +109,17 @@ public class StoreService {
         return storeRepository.findById(storeId).orElseThrow(() -> new RuntimeException("찾는 store가 없습니다"));
     }
 
+    // 이미지 만들기
+    private String createImageUrl(MultipartFile file, String dirName) {
+        // 멤버 폴더 생성 (nearDealImage/{memberId})
+        // 이미지가 있을 때만 저장
+        String publicUrl = null;
+        if (file != null && !file.isEmpty()) {
+            publicUrl = fileStorage.createUrl(dirName, file, 0);
+            return publicUrl;
+        }
+        
+        return null;
+    }
 
 }

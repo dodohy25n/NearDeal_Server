@@ -90,7 +90,9 @@ public class StoreController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상점")
     })
     @Parameter(name = "storeId", description = "상점 ID", required = true)
-    public ResponseEntity<Long> updateStoreInfo(@PathVariable Long storeId, @RequestBody StoreRequest storeRequest) {
+    public ResponseEntity<Long> updateStoreInfo(
+            @PathVariable Long storeId,
+            @ModelAttribute StoreRequest storeRequest) {
 
         Long result = storeService.updateStoreInfo(storeId, storeRequest);
 

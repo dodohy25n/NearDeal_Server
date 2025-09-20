@@ -76,7 +76,8 @@ public class ItemController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 상품")
     })
     @Parameter(name = "itemId", description = "상품 ID", required = true)
-    public ResponseEntity<ItemDetailResponse> updateItemDetail(@PathVariable Long itemId, @RequestBody ItemRequest itemRequest) {
+    public ResponseEntity<ItemDetailResponse> updateItemDetail(
+            @PathVariable Long itemId, @RequestBody ItemRequest itemRequest) {
         return null;
     }
 

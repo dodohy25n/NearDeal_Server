@@ -60,7 +60,7 @@ public class Store {
     @Column(nullable = false)
     private float lng;
 
-    @Column(nullable = false, length = 512)
+    @Column(length = 512)
     @OrderColumn(name = "sort_order")
     private String imageUrl;
 
@@ -115,7 +115,7 @@ public class Store {
     /**
      * 가게 정보 변경
      */
-    public Long updateStore(StoreRequest request){
+    public Long updateStore(StoreRequest request, String imageUrl){
         this.storeName = request.getStoreName();
         this.category = request.getCategory();
         this.openingTime = request.getOpeningTime();
@@ -124,6 +124,7 @@ public class Store {
         this.introduce = request.getIntroduce();
         this.lat = request.getLat();
         this.lng = request.getLng();
+        this.imageUrl = imageUrl;
 
         return this.id;
     }
