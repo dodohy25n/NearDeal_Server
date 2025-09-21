@@ -5,10 +5,11 @@ import hello.neardeal_server.coupon.entity.CouponType;
 import hello.neardeal_server.member.entity.PartnerCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Getter
+@Getter @NoArgsConstructor
 @Schema(description = "새 쿠폰 등록 요청")
 public class CouponRequest {
 
@@ -50,4 +51,12 @@ public class CouponRequest {
 
     @Schema(description = "제휴 카테고리")
     private PartnerCategory partnerCategory;
+
+    public CouponRequest(Long storeId, String name, String description, CouponStatus status, CouponType type ){
+        this.storeId = storeId;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.type = type;
+    }
 }
