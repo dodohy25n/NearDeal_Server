@@ -62,6 +62,8 @@ public class Store extends BaseEntity {
     @Column(nullable = false)
     private float lng;
 
+    private String phoneNumber;
+
     @Column(length = 512)
     @OrderColumn(name = "sort_order")
     private String imageUrl;
@@ -106,6 +108,7 @@ public class Store extends BaseEntity {
         store.lat = request.getLat();
         store.lng = request.getLng();
         store.imageUrl = imageUrls;
+        store.phoneNumber = request.getPhoneNumber();
         store.likeCount = 0;
         
         store.addOwner(owner);
@@ -127,15 +130,9 @@ public class Store extends BaseEntity {
         this.introduce = request.getIntroduce();
         this.lat = request.getLat();
         this.lng = request.getLng();
+        this.phoneNumber = request.getPhoneNumber();
         this.imageUrl = imageUrl;
 
-        return this.id;
-    }
-    /**
-     * 가게 대표 이미지 변경
-     */
-    public Long updateImageUrl(String imageUrl){
-        this.imageUrl = imageUrl;
         return this.id;
     }
 

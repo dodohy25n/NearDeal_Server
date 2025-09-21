@@ -1,6 +1,6 @@
 package hello.neardeal_server.member.entity;
 
-import hello.neardeal_server.member.dto.OwnerRequest;
+import hello.neardeal_server.member.dto.request.OwnerRequest;
 import hello.neardeal_server.store.entity.Store;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

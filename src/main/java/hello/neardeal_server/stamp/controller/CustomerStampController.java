@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -37,16 +38,30 @@ public class CustomerStampController {
     }
 
 
-    @PutMapping("/{stampId}")
+    @PutMapping("/{customerStampId}")
     @Operation(summary = "[고객]스탬프 적립", description = "스탬프 적립하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "스탬프 적립 성공"),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
+            @ApiResponse(responseCode = "201", description = "스탬프 적립 성공 + 쿠폰 발행"),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프"),
+            @ApiResponse(responseCode = "400", description = "비밀번호 틀림")
     })
-    public ResponseEntity<Integer> addStamp(
-            @Parameter(name = "stampId", description = "스탬프 ID", required = true) @PathVariable Long stampId
+    public ResponseEntity<Integer> addCustomerStamp(
+            @Parameter(name = "customerStampId", description = "스탬프 ID", required = true) @PathVariable Long customerStampId,
+            @PathParam(value = "secretCode") String secretCode
     ) {
-        int stampCount = customerStampService.addStamp(stampId);
+        int stampCount = customerStampService.addStamp(customerStampId,secretCode);
+        
+        if(stampCount == -2){
+            // 비밀번호 오류
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(stampCount);
+        }
+        
+        if(stampCount == -1){
+            // 10개 채워져서 쿠폰으로 변경됨
+            return ResponseEntity.status(HttpStatus.CREATED).body(stampCount);
+        }
+        
         return ResponseEntity.status(HttpStatus.OK).body(stampCount);
     }
 
@@ -63,18 +78,19 @@ public class CustomerStampController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("해당 스탬프의 모습을 토글하였습니다.");
     }
 
-    @GetMapping
+    @GetMapping("/{customerId}")
     @Operation(summary = "[고객]내가 적립한 스탬프 목록 조회", description = "내 적립 스탬프 목록 페이징 조회하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "스탬프 정보 조회 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
     })
-    public ResponseEntity<PageResponse<CustomerStampResponse>> getStampList(
+    public ResponseEntity<PageResponse<CustomerStampResponse>> getCustomerStampList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
+            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size,
+            @Parameter(description = "고객ID") @PathVariable Long customerId
     ) {
 
-        Page<CustomerStampResponse> all = customerStampService.findCustomStamp(page, size);
+        Page<CustomerStampResponse> all = customerStampService.findCustomStamp(customerId,page, size);
         PageResponse<CustomerStampResponse> result = PageResponse.pageToResponse(all);
         return ResponseEntity.ok(result);
 

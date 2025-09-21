@@ -1,7 +1,7 @@
 package hello.neardeal_server;
 
-import hello.neardeal_server.member.dto.CustomerRequest;
-import hello.neardeal_server.member.dto.OwnerRequest;
+import hello.neardeal_server.member.dto.request.CustomerRequest;
+import hello.neardeal_server.member.dto.request.OwnerRequest;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.entity.Owner;
 import hello.neardeal_server.member.entity.PartnerCategory;

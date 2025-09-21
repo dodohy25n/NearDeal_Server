@@ -24,4 +24,45 @@ public class CustomerStore extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
+
+    // == 연관관계 편의 메서드 == //
+    public void addCustomer(Customer customer){
+        this.customer = customer;
+        customer.getCustomerStoreList().add(this);
+    }
+    public void addStore(Store store){
+        this.store = store;
+    }
+
+    // == 생성자 메서드 == //
+    public static CustomerStore create(Customer customer, Store store){
+        CustomerStore customerStore = new CustomerStore();
+        customerStore.isLiked = true;
+        customerStore.addCustomer(customer);
+        customerStore.addStore(store);
+
+        return customerStore;
+    }
+
+    // == 비즈니스 로직 == //
+
+    /**
+     * 좋아요 버튼
+     */
+    public void like() {
+        if (!this.isLiked) {
+            this.isLiked = true;
+        }
+    }
+
+    public void unlike() {
+        if (this.isLiked) {
+            this.isLiked = false;
+        }
+
+    }
 }
