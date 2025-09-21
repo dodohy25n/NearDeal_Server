@@ -72,8 +72,7 @@ public class CustomerStampService {
     /**
      * 내가 적립한 스탬프 목록 조회
      */
-    public Page<CustomerStampResponse> findCustomStamp(int page, int size){
-        Long customerId = 1L;
+    public Page<CustomerStampResponse> findCustomStamp(Long customerId, int page, int size){
         Customer customer = memberService.findOneCustomer(customerId);
 
         Pageable pageable = PageRequest.of(
