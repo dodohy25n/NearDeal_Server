@@ -1,5 +1,6 @@
 package hello.neardeal_server.stamp.service;
 
+import hello.neardeal_server.common.RandomCode;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.repository.CustomerRepository;
 import hello.neardeal_server.member.service.MemberService;
@@ -50,13 +51,24 @@ public class CustomerStampService {
      * 스탬프 적립하기
      */
     @Transactional
-    public int addStamp(Long customerStampId){
+    public int addStamp(Long customerStampId, String code){
         CustomerStamp customerStamp = findOne(customerStampId);
+        Stamp stamp = customerStamp.getStamp();
+        String secretCode1 = stamp.getSecretCode();
+        if(!secretCode1.equals(code)){
+            return -2;
+        }
+
+        // 비밀번호 교체
+        String newSecretCode = RandomCode.clearAlphaNum4();
+        stamp.updateSecretCode(newSecretCode);
+        
         if(customerStamp.getCurrentCount() + 1 >= customerStamp.getStamp().getMaxCount()){
             // todo: 쿠폰 생성 로직
             customerStamp.changeCoupon();
             return -1;
         }
+
         return customerStamp.addStamp();
     }
 

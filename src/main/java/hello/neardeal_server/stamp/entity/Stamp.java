@@ -61,4 +61,10 @@ public class Stamp extends BaseEntity {
         this.reward = request.getReward();
         return this.id;
     }
+    /**
+     * 비밀번호 변경
+     */
+    public void updateSecretCode(String secretCode){
+        this.secretCode = secretCode;
+    }
 }

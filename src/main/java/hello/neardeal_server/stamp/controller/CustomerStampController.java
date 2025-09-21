@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -41,12 +42,26 @@ public class CustomerStampController {
     @Operation(summary = "[고객]스탬프 적립", description = "스탬프 적립하기")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "스탬프 적립 성공"),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프")
+            @ApiResponse(responseCode = "201", description = "스탬프 적립 성공 + 쿠폰 발행"),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 스탬프"),
+            @ApiResponse(responseCode = "400", description = "비밀번호 틀림")
     })
     public ResponseEntity<Integer> addCustomerStamp(
-            @Parameter(name = "customerStampId", description = "스탬프 ID", required = true) @PathVariable Long customerStampId
+            @Parameter(name = "customerStampId", description = "스탬프 ID", required = true) @PathVariable Long customerStampId,
+            @PathParam(value = "secretCode") String secretCode
     ) {
-        int stampCount = customerStampService.addStamp(customerStampId);
+        int stampCount = customerStampService.addStamp(customerStampId,secretCode);
+        
+        if(stampCount == -2){
+            // 비밀번호 오류
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(stampCount);
+        }
+        
+        if(stampCount == -1){
+            // 10개 채워져서 쿠폰으로 변경됨
+            return ResponseEntity.status(HttpStatus.CREATED).body(stampCount);
+        }
+        
         return ResponseEntity.status(HttpStatus.OK).body(stampCount);
     }
 
