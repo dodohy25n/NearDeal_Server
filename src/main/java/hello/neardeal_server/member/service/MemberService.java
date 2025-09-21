@@ -1,6 +1,13 @@
 package hello.neardeal_server.member.service;
 
-import hello.neardeal_server.member.dto.*;
+import hello.neardeal_server.member.dto.request.CustomerRequest;
+import hello.neardeal_server.member.dto.request.MemberUpdateRequest;
+import hello.neardeal_server.member.dto.request.OwnerRequest;
+import hello.neardeal_server.member.dto.request.SignupRequest;
+import hello.neardeal_server.member.dto.response.CustomerDetailResponse;
+import hello.neardeal_server.member.dto.response.MemberDetailResponse;
+import hello.neardeal_server.member.dto.response.MemberListResponse;
+import hello.neardeal_server.member.dto.response.OwnerDetailResponse;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.entity.Member;
 import hello.neardeal_server.member.entity.Owner;
@@ -10,13 +17,9 @@ import hello.neardeal_server.member.repository.OwnerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional

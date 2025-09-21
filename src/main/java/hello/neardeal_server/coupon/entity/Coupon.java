@@ -51,7 +51,7 @@ public class Coupon {
     private Long limitPerPerson;
 
     private String notice; // 유의사항
-
+ 
     @Column(nullable = false)
     private Timestamp couponStartDate;  // 쿠폰 적용 시작 일시
 

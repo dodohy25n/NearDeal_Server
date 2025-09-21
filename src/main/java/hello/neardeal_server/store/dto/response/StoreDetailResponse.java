@@ -51,6 +51,10 @@ public class StoreDetailResponse {
     @Schema(description = "대표 이미지 URL")
     private String mainImageUrl;
 
+    @Schema(description = "전화번호")
+    private String phoneNumber;
+
+
 //    @Schema(description = "별점")
 //    private double rating;
 
@@ -66,6 +70,7 @@ public class StoreDetailResponse {
                 .breakTime(store.getBreakTime())
                 .address(store.getAddress())
                 .introduce(store.getIntroduce())
+                .phoneNumber(store.getPhoneNumber())
                 .mainImageUrl(store.getImageUrl())
                 .build();
     }

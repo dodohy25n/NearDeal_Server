@@ -38,6 +38,9 @@ public class StoreRequest {
     @Schema(description = "경도")
     private float lng;
 
+    @Schema(description = "전화번호")
+    private String phoneNumber;
+
 
 //    @Schema(description = "대표 이미지")
 //    private String mainImage;

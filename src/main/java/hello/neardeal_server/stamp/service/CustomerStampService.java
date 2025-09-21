@@ -1,7 +1,5 @@
 package hello.neardeal_server.stamp.service;
 
-import hello.neardeal_server.coupon.entity.Coupon;
-import hello.neardeal_server.member.dto.CustomerRequest;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.repository.CustomerRepository;
 import hello.neardeal_server.member.service.MemberService;
@@ -16,8 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.stream.Stream;
 
 @Service
 @Transactional(readOnly = true)

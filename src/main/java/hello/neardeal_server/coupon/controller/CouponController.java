@@ -3,7 +3,7 @@ package hello.neardeal_server.coupon.controller;
 import hello.neardeal_server.coupon.dto.CouponDetailResponse;
 import hello.neardeal_server.coupon.dto.CouponRequest;
 import hello.neardeal_server.coupon.dto.CouponListResponse;
-import hello.neardeal_server.member.dto.MemberDetailResponse;
+import hello.neardeal_server.member.dto.response.MemberDetailResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
