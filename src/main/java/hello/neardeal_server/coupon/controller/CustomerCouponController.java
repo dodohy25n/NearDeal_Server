@@ -2,7 +2,6 @@ package hello.neardeal_server.coupon.controller;
 
 
 import hello.neardeal_server.coupon.dto.CouponDetailResponse;
-import hello.neardeal_server.coupon.dto.CouponListResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -58,28 +57,22 @@ public class CustomerCouponController {
         return null;
     }
 
-    @GetMapping("/my")
-    @Operation(summary = "[고객]내가 적립한 쿠폰 목록 조회", description = "내 적립 쿠폰 목록 페이징 조회하기")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "쿠폰 정보 조회 성공", content = @Content(schema = @Schema(implementation = CouponDetailResponse.class))),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 쿠폰")
-    })
-    public ResponseEntity<CouponListResponse> getCouponList(
-            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
-    ) {
-        // This is a mock implementation
-        List<CouponDetailResponse> mockCoupons = new ArrayList<>();
-
-        Page<CouponDetailResponse> CouponPage = new PageImpl<>(mockCoupons, PageRequest.of(page, size), 0);
-
-        CouponListResponse response = new CouponListResponse(
-                CouponPage.getContent(),
-                CouponPage.getNumber(),
-                CouponPage.getSize(),
-                CouponPage.getTotalPages(),
-                CouponPage.getTotalElements()
-        );
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/my")
+//    @Operation(summary = "[고객]내가 적립한 쿠폰 목록 조회", description = "내 적립 쿠폰 목록 페이징 조회하기")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "쿠폰 정보 조회 성공", content = @Content(schema = @Schema(implementation = CouponDetailResponse.class))),
+//            @ApiResponse(responseCode = "404", description = "존재하지 않는 쿠폰")
+//    })
+//    public ResponseEntity<CouponListResponse> getCouponList(
+//            @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
+//            @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
+//    ) {
+//        // This is a mock implementation
+//        List<CouponDetailResponse> mockCoupons = new ArrayList<>();
+//
+//        Page<CouponDetailResponse> CouponPage = new PageImpl<>(mockCoupons, PageRequest.of(page, size), 0);
+//
+//
+//        return ResponseEntity.ok(response);
+//    }
 }

@@ -1,5 +1,6 @@
 package hello.neardeal_server.member.service;
 
+import hello.neardeal_server.common.PageResponse;
 import hello.neardeal_server.member.dto.*;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.entity.Member;
@@ -7,6 +8,7 @@ import hello.neardeal_server.member.entity.Owner;
 import hello.neardeal_server.member.repository.CustomerRepository;
 import hello.neardeal_server.member.repository.MemberRepository;
 import hello.neardeal_server.member.repository.OwnerRepository;
+import hello.neardeal_server.store.dto.response.StoreDetailResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -59,11 +61,10 @@ public class MemberService  {
     /**
      * 전체회원 목록 조회
      */
-    public MemberListResponse getMemberList(int page, int size) {
-        PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Member> members = memberRepository.findAll(pageRequest);
+    public PageResponse<MemberDetailResponse> getMemberList(int page, int size) {
+        Page<Member> members = memberRepository.findAll(PageRequest.of(page, size));
         Page<MemberDetailResponse> memberDetailResponsePage = members.map(MemberDetailResponse::entityToResponse);
-        return MemberListResponse.of(memberDetailResponsePage);
+        return PageResponse.pageToResponse(memberDetailResponsePage);
     }
 
     /**
