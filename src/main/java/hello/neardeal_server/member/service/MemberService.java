@@ -1,7 +1,13 @@
 package hello.neardeal_server.member.service;
 
 import hello.neardeal_server.common.PageResponse;
-import hello.neardeal_server.member.dto.*;
+import hello.neardeal_server.member.dto.request.CustomerRequest;
+import hello.neardeal_server.member.dto.request.MemberUpdateRequest;
+import hello.neardeal_server.member.dto.request.OwnerRequest;
+import hello.neardeal_server.member.dto.request.SignupRequest;
+import hello.neardeal_server.member.dto.response.CustomerDetailResponse;
+import hello.neardeal_server.member.dto.response.MemberDetailResponse;
+import hello.neardeal_server.member.dto.response.OwnerDetailResponse;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.entity.Member;
 import hello.neardeal_server.member.entity.Owner;

@@ -1,7 +1,7 @@
 package hello.neardeal_server.member.entity;
 
-import hello.neardeal_server.member.dto.MemberUpdateRequest;
-import hello.neardeal_server.member.dto.SignupRequest;
+import hello.neardeal_server.member.dto.request.MemberUpdateRequest;
+import hello.neardeal_server.member.dto.request.SignupRequest;
 import jakarta.persistence.*;
 import lombok.*;
 

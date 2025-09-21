@@ -1,7 +1,11 @@
 package hello.neardeal_server.stamp.service;
 
+import hello.neardeal_server.common.RandomCode;
+import hello.neardeal_server.coupon.dto.CouponRequest;
 import hello.neardeal_server.coupon.entity.Coupon;
-import hello.neardeal_server.member.dto.CustomerRequest;
+import hello.neardeal_server.coupon.entity.CouponStatus;
+import hello.neardeal_server.coupon.entity.CouponType;
+import hello.neardeal_server.coupon.service.CouponService;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.repository.CustomerRepository;
 import hello.neardeal_server.member.service.MemberService;
@@ -17,8 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.stream.Stream;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -28,7 +30,7 @@ public class CustomerStampService {
     private final StampService stampService;
     private final CustomerStampRepository customerStampRepository;
     private final MemberService memberService;
-    private final CustomerRepository customerRepository;
+    private final CouponService couponService;
 
     /**
      * 스탬프 신청하기
@@ -54,13 +56,30 @@ public class CustomerStampService {
      * 스탬프 적립하기
      */
     @Transactional
-    public int addStamp(Long customerStampId){
+    public int addStamp(Long customerStampId, String code){
         CustomerStamp customerStamp = findOne(customerStampId);
+        Stamp stamp = customerStamp.getStamp();
+        String secretCode1 = stamp.getSecretCode();
+        if(!secretCode1.equals(code)){
+            return -2;
+        }
+
+        // 비밀번호 교체
+        String newSecretCode = RandomCode.clearAlphaNum4();
+        stamp.updateSecretCode(newSecretCode);
+        
+        // 10개 채워지면 쿠폰으로 변경
         if(customerStamp.getCurrentCount() + 1 >= customerStamp.getStamp().getMaxCount()){
             // todo: 쿠폰 생성 로직
+            CouponRequest couponRequest = new CouponRequest(stamp.getStore().getId(), stamp.getStore().getStoreName() + "의 스탬프 쿠폰", stamp.getReward(), CouponStatus.ACTIVE, CouponType.STAMP);
+            Long couponId = couponService.createCoupon(couponRequest);
+            Customer customer = customerStamp.getCustomer();
+            // todo: 쿠폰 아이디 이용해서 쿠폰 발급받기 (customerCoupon 생성하기)
+
             customerStamp.changeCoupon();
             return -1;
         }
+
         return customerStamp.addStamp();
     }
 
@@ -76,8 +95,7 @@ public class CustomerStampService {
     /**
      * 내가 적립한 스탬프 목록 조회
      */
-    public Page<CustomerStampResponse> findCustomStamp(int page, int size){
-        Long customerId = 1L;
+    public Page<CustomerStampResponse> findCustomStamp(Long customerId, int page, int size){
         Customer customer = memberService.findOneCustomer(customerId);
 
         Pageable pageable = PageRequest.of(
@@ -92,7 +110,8 @@ public class CustomerStampService {
     /**
      * 내 스탬프 삭제하기?
      */
-
+    
+    // 찾기
     public CustomerStamp findOne(Long customerStampId){
         return customerStampRepository.findById(customerStampId).orElseThrow(() -> new RuntimeException("너가 만든 스탬프 없음"));
     }

@@ -1,7 +1,7 @@
 package hello.neardeal_server.member.entity;
 
 import hello.neardeal_server.coupon.entity.CustomerCoupon;
-import hello.neardeal_server.member.dto.CustomerRequest;
+import hello.neardeal_server.member.dto.request.CustomerRequest;
 import hello.neardeal_server.stamp.entity.CustomerStamp;
 import hello.neardeal_server.store.entity.CustomerStore;
 import jakarta.persistence.*;

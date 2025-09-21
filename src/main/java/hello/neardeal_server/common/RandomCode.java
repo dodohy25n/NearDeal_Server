@@ -6,7 +6,7 @@ public final class RandomCode {
     private static final SecureRandom RND = new SecureRandom();
     // 0/O, 1/l/I 같은 혼동 문자 제외
     private static final char[] CLEAR_ALPHANUM =
-            "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789".toCharArray();
+            "ABCDEFGHJKLMNPQRSTUVWXYZ23456789".toCharArray();
 
     public static String clearAlphaNum(int len) {
         char[] out = new char[len];

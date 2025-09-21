@@ -24,7 +24,6 @@ public class StoreService {
 
     private final StoreRepository storeRepository;
     private final FileStorage fileStorage;
-    private final MemberRepository memberRepository;
     private final MemberService memberService;
 
 

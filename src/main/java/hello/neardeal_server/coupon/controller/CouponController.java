@@ -4,7 +4,6 @@ import hello.neardeal_server.common.PageResponse;
 import hello.neardeal_server.coupon.dto.CouponDetailResponse;
 import hello.neardeal_server.coupon.dto.CouponRequest;
 import hello.neardeal_server.coupon.service.CouponService;
-import hello.neardeal_server.member.dto.MemberDetailResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -51,7 +50,7 @@ public class CouponController {
     @Operation(summary = "쿠폰 정보 조회", description = "쿠폰 정보 조회하기")
     //    @SecurityRequirement(name = "bearerAuth")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "쿠폰 정보 조회 성공", content = @Content(schema = @Schema(implementation = MemberDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "쿠폰 정보 조회 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 쿠폰")
     })
     @Parameter(name = "couponId", description = "쿠폰 ID", required = true)

@@ -1,4 +1,4 @@
-package hello.neardeal_server.member.dto;
+package hello.neardeal_server.member.dto.response;
 
 import hello.neardeal_server.member.entity.Owner;
 import io.swagger.v3.oas.annotations.media.Schema;
