@@ -76,12 +76,13 @@ public class CouponController {
     @Operation(summary = "쿠폰 정보 수정", description = "쿠폰 정보 수정하기")
     //    @SecurityRequirement(name = "bearerAuth")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "쿠폰 정보 수정 성공", content = @Content(schema = @Schema(implementation = CouponDetailResponse.class))),
+            @ApiResponse(responseCode = "200", description = "쿠폰 정보 수정 성공", content = @Content(schema = @Schema(implementation = CouponDetailResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 쿠폰")
     })
     @Parameter(name = "couponId", description = "쿠폰 ID", required = true)
-    public ResponseEntity<CouponDetailResponse> updateCouponDetail(@PathVariable Long couponId) {
-        return null;
+    public ResponseEntity<CouponDetailResponse> updateCouponDetail(@PathVariable Long couponId, @RequestBody CouponRequest couponRequest) {
+        CouponDetailResponse updatedCoupon = couponService.updateCoupon(couponId, couponRequest);
+        return ResponseEntity.ok(updatedCoupon);
     }
 
     @DeleteMapping("/{couponId}")

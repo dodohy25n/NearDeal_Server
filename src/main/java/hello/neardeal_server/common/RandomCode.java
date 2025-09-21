@@ -19,4 +19,13 @@ public final class RandomCode {
     public static String clearAlphaNum4() {
         return clearAlphaNum(4);
     }
+
+    public static String numeric(int len) {
+        char[] digits = "0123456789".toCharArray();
+        char[] out = new char[len];
+        for (int i = 0; i < len; i++) {
+            out[i] = digits[RND.nextInt(digits.length)];
+        }
+        return new String(out);
+    }
 }

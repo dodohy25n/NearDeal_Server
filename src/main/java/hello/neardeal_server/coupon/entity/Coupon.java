@@ -82,11 +82,31 @@ public class Coupon extends BaseTimeEntity {
         return coupon;
     }
 
+    /**
+     * 쿠폰 정보 변경
+     */
+    public Long update(CouponRequest couponRequest) {
+        this.name = couponRequest.getName();
+        this.description = couponRequest.getDescription();
+        this.issuingQuantity = couponRequest.getIssuingQuantity();
+        this.status = couponRequest.getStatus();
+        this.type = couponRequest.getType();
+        this.discountedAmount = couponRequest.getDiscountedAmount();
+        this.couponStartDate = couponRequest.getCouponStartDate();
+        this.couponEndDate = couponRequest.getCouponEndDate();
+        this.limitPerPerson = couponRequest.getLimitPerPerson();
+        this.notice = couponRequest.getNotice();
+        this.partnerCategory = couponRequest.getPartnerCategory();
+
+        return this.id;
+    }
+
     /* --- 연관관계 편의 메서드 --- */
 
     private void addStore(Store store) {
         store.getCoupons().add(this);
         this.store = store;
     }
+
 
 }

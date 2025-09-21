@@ -25,6 +25,8 @@ public class CustomerCoupon {
     @Column(nullable = false)
     private CouponUsageStatus usageStatus = CouponUsageStatus.UNUSED;
 
+    private boolean isVisible = true;
+
     @CreationTimestamp
     private LocalDateTime createdAt; // 쿠폰 적립 일
 
@@ -36,4 +38,31 @@ public class CustomerCoupon {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coupon_id", nullable = false)
     private Coupon coupon;
+
+    /* --- 메서드 --- */
+    
+    public static CustomerCoupon create(Customer customer, Coupon coupon, String couponCode) {
+        CustomerCoupon customerCoupon = new CustomerCoupon();
+        customerCoupon.couponCode = couponCode;
+        customerCoupon.addCustomerAndCoupon(customer, coupon);
+        return customerCoupon;
+    }
+
+    public void use() {
+        if (this.usageStatus != CouponUsageStatus.UNUSED) {
+            throw new IllegalStateException("이미 사용되었거나 만료된 쿠폰입니다.");
+        }
+        this.usageStatus = CouponUsageStatus.USED;
+    }
+
+    public void toggleVisibility() {
+        this.isVisible = !this.isVisible;
+    }
+
+    /* --- 연관관계 편의 메서드 --- */
+    private void addCustomerAndCoupon(Customer customer, Coupon coupon) {
+        this.customer = customer;
+        customer.getCustomerCouponList().add(this);
+        this.coupon = coupon;
+    }
 }
