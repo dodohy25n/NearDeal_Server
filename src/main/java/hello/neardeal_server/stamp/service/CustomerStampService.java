@@ -1,6 +1,11 @@
 package hello.neardeal_server.stamp.service;
 
 import hello.neardeal_server.common.RandomCode;
+import hello.neardeal_server.coupon.dto.CouponRequest;
+import hello.neardeal_server.coupon.entity.Coupon;
+import hello.neardeal_server.coupon.entity.CouponStatus;
+import hello.neardeal_server.coupon.entity.CouponType;
+import hello.neardeal_server.coupon.service.CouponService;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.repository.CustomerRepository;
 import hello.neardeal_server.member.service.MemberService;
@@ -25,7 +30,7 @@ public class CustomerStampService {
     private final StampService stampService;
     private final CustomerStampRepository customerStampRepository;
     private final MemberService memberService;
-    private final CustomerRepository customerRepository;
+    private final CouponService couponService;
 
     /**
      * 스탬프 신청하기
@@ -63,8 +68,14 @@ public class CustomerStampService {
         String newSecretCode = RandomCode.clearAlphaNum4();
         stamp.updateSecretCode(newSecretCode);
         
+        // 10개 채워지면 쿠폰으로 변경
         if(customerStamp.getCurrentCount() + 1 >= customerStamp.getStamp().getMaxCount()){
             // todo: 쿠폰 생성 로직
+            CouponRequest couponRequest = new CouponRequest(stamp.getStore().getId(), stamp.getStore().getStoreName() + "의 스탬프 쿠폰", stamp.getReward(), CouponStatus.ACTIVE, CouponType.STAMP);
+            Long couponId = couponService.createCoupon(couponRequest);
+            Customer customer = customerStamp.getCustomer();
+            // todo: 쿠폰 아이디 이용해서 쿠폰 발급받기 (customerCoupon 생성하기)
+
             customerStamp.changeCoupon();
             return -1;
         }
@@ -99,7 +110,8 @@ public class CustomerStampService {
     /**
      * 내 스탬프 삭제하기?
      */
-
+    
+    // 찾기
     public CustomerStamp findOne(Long customerStampId){
         return customerStampRepository.findById(customerStampId).orElseThrow(() -> new RuntimeException("너가 만든 스탬프 없음"));
     }
