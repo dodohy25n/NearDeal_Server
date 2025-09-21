@@ -41,10 +41,6 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToOne
-    @JoinColumn(name = "coupon_id")
-    private Coupon coupon;
-
     // == 연관관계 편의 메서드 == //
     public void addStore(Store store){
         this.store = store;

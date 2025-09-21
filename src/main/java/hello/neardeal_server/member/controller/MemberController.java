@@ -7,7 +7,6 @@ import hello.neardeal_server.member.dto.request.OwnerRequest;
 import hello.neardeal_server.member.dto.request.SignupRequest;
 import hello.neardeal_server.member.dto.response.CustomerDetailResponse;
 import hello.neardeal_server.member.dto.response.MemberDetailResponse;
-import hello.neardeal_server.member.dto.response.MemberListResponse;
 import hello.neardeal_server.member.dto.response.OwnerDetailResponse;
 import hello.neardeal_server.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -62,13 +61,12 @@ public class MemberController {
     @Operation(summary = "회원 목록 조회", description = "회원 목록 페이징 조회하기")
     //    @SecurityRequirement(name = "bearerAuth")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "회원 목록 조회 성공", content = @Content(schema = @Schema(implementation = MemberListResponse.class)))
+            @ApiResponse(responseCode = "200", description = "회원 목록 조회 성공", content = @Content(schema = @Schema(implementation = PageResponse.class)))
     })
-    public ResponseEntity<MemberListResponse> getMemberList(
+    public ResponseEntity<PageResponse<MemberDetailResponse>> getMemberList(
             @Parameter(description = "페이지 번호 (0부터 시작)") @RequestParam(defaultValue = "0") int page,
             @Parameter(description = "페이지 당 사이즈") @RequestParam(defaultValue = "10") int size
     ) {
-
         return ResponseEntity.status(HttpStatus.OK).body(memberService.getMemberList(page, size));
     }
 

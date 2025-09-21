@@ -2,6 +2,7 @@ package hello.neardeal_server.store.entity;
 
 import hello.neardeal_server.common.DurationTime;
 import hello.neardeal_server.common.auditing.BaseEntity;
+import hello.neardeal_server.coupon.entity.Coupon;
 import hello.neardeal_server.item.entity.Item;
 import hello.neardeal_server.member.entity.Owner;
 import hello.neardeal_server.stamp.entity.Stamp;
@@ -79,13 +80,14 @@ public class Store extends BaseEntity {
     private List<Item> items = new ArrayList<>(); // item 생성 시 add
     @OneToMany(mappedBy = "store", cascade = ALL)
     private List<Stamp> stamps = new ArrayList<>(); // stamp 생성 시 add
+    @OneToMany(mappedBy = "store", cascade = ALL)
+    private List<Coupon> coupons = new ArrayList<>(); // coupon 생성 시 add
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
 // todo:
-//    private List<Coupon> coupons = new ArrayList<>();
 //    private List<Review> reviews = new ArrayList<>();
 
     // == 연관관계 편의 메서드 == //
