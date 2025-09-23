@@ -24,17 +24,17 @@ public class InitData {
     @PostConstruct
     public void init() {
 
-        Customer customer1 = Customer.create(new CustomerRequest(PartnerCategory.EDUCATION));
-        Customer customer2 = Customer.create(new CustomerRequest(PartnerCategory.ARTS));
-        customerRepository.save(customer1);
-        customerRepository.save(customer2);
-
-        Owner owner1 = Owner.create(new OwnerRequest("123456"));
-        Owner owner2 = Owner.create(new OwnerRequest("456235"));
-        Owner owner3 = Owner.create(new OwnerRequest("879555"));
-        Owner save1 = ownerRepository.save(owner1);
-        Owner save2 = ownerRepository.save(owner2);
-        Owner save3 = ownerRepository.save(owner3);
+//        Customer customer1 = Customer.create(new CustomerRequest(PartnerCategory.EDUCATION));
+//        Customer customer2 = Customer.create(new CustomerRequest(PartnerCategory.ARTS));
+//        customerRepository.save(customer1);
+//        customerRepository.save(customer2);
+//
+//        Owner owner1 = Owner.create(new OwnerRequest("123456"));
+//        Owner owner2 = Owner.create(new OwnerRequest("456235"));
+//        Owner owner3 = Owner.create(new OwnerRequest("879555"));
+//        Owner save1 = ownerRepository.save(owner1);
+//        Owner save2 = ownerRepository.save(owner2);
+//        Owner save3 = ownerRepository.save(owner3);
     }
 
 }
