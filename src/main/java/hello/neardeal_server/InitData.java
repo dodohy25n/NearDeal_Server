@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class InitData {
-
-    private final StoreService storeService;
-    private final CustomerRepository customerRepository;
-    private final OwnerRepository ownerRepository;
+//
+//    private final StoreService storeService;
+//    private final CustomerRepository customerRepository;
+//    private final OwnerRepository ownerRepository;
 
 
     @PostConstruct
