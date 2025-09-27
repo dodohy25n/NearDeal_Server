@@ -31,6 +31,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    // == 점주 고객 공통 API == //
     @PostMapping("/signup")
     @Operation(summary = "회원 가입", description = "회원 가입")
     @ApiResponses(value = {
@@ -82,10 +83,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(memberDetailResponse);
     }
 
-
-
-
-
+    // == 고객 공통 API == //
     @PostMapping("/customer")
     @Operation(summary = "고객 정보 등록", description = "고객 정보 등록하기")
     @ApiResponses(value = {
@@ -140,11 +138,7 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body("정보가 갱신되었습니다");
     }
 
-
-
-
-
-
+    // == 고객 공통 API == //
 
     @PostMapping("/owner")
     @Operation(summary = "점주 정보 등록", description = "점주 정보 등록하기")
@@ -198,8 +192,4 @@ public class MemberController {
         Long result = memberService.updateOwner(ownerId, request);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
-
-
-
-
 }

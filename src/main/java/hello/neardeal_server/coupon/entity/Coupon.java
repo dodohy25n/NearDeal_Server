@@ -57,13 +57,9 @@ public class Coupon extends BaseTimeEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
-
     /* --- 메서드 --- */
 
-    public static Coupon create(CouponRequest couponRequest, Store store) {
+    public static Coupon create(CouponRequest couponRequest, Store store, Item item) {
         Coupon coupon = new Coupon();
         coupon.name = couponRequest.getName();
         coupon.description = couponRequest.getDescription();
@@ -79,6 +75,7 @@ public class Coupon extends BaseTimeEntity {
         coupon.partnerCategory = couponRequest.getPartnerCategory();
         coupon.addStore(store); // 연관관계 설정
         coupon.store = store; // 연관관계 설정
+        item.addCoupon(coupon);
         return coupon;
     }
 

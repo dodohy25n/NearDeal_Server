@@ -6,6 +6,8 @@ import hello.neardeal_server.coupon.dto.CouponRequest;
 import hello.neardeal_server.coupon.entity.Coupon;
 import hello.neardeal_server.coupon.repository.CouponRepository;
 import hello.neardeal_server.coupon.repository.CustomerCouponRepository;
+import hello.neardeal_server.item.entity.Item;
+import hello.neardeal_server.item.repository.ItemRepository;
 import hello.neardeal_server.member.repository.CustomerRepository;
 import hello.neardeal_server.store.entity.Store;
 import hello.neardeal_server.store.repository.StoreRepository;
@@ -22,6 +24,7 @@ public class CouponService {
 
     private final CouponRepository couponRepository;
     private final StoreRepository storeRepository;
+    private final ItemRepository itemRepository;
     private final CustomerRepository customerRepository;
     private final CustomerCouponRepository customerCouponRepository;
 
@@ -31,7 +34,9 @@ public class CouponService {
     public Long createCoupon(CouponRequest request) {
         Store store = storeRepository.findById(request.getStoreId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 상점이 존재하지 않습니다."));
-        Coupon coupon = Coupon.create(request, store);
+        Item item = itemRepository.findById(request.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+        Coupon coupon = Coupon.create(request, store, item);
         Coupon savedCoupon = couponRepository.save(coupon);
         return savedCoupon.getId();
     }

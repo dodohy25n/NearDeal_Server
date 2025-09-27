@@ -41,10 +41,18 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
+
     // == 연관관계 편의 메서드 == //
     public void addStore(Store store){
         this.store = store;
         store.getItems().add(this);
+    }
+
+    public void addCoupon(Coupon coupon){
+        this.coupon = coupon;
     }
 
     // == 생성자 메서드 == //
