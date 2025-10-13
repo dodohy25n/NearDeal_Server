@@ -1,0 +1,57 @@
+name: "BE-PROD :: Build and Deploy to Prod Server"
+
+on:
+  push:
+    # main 브랜치에 푸시될 때 실행
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    # 'prod' 환경을 사용하도록 지정하여 해당 환경의 Secrets와 Variables를 불러옵니다.
+    environment: prod
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: . # 백엔드 Dockerfile이 있는 경로
+          push: true
+          tags: ehgus8910/neardeal-backend:latest-prod # Docker Hub 사용자명/이미지명:태그
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_SERVER_HOST }}
+          username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
+          password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
+          script: |
+            # 애플리케이션 디렉터리로 이동
+            cd /root/neardeal
+            
+            echo "Exporting sensitive secrets..."
+            export DB_HOST='${{ secrets.DB_HOST }}'
+            export DB_PASSWORD='${{ secrets.DB_PASSWORD }}'
+            export DB_PORT='${{ secrets.DB_PORT }}'
+            export DDL_AUTO_VALUE='${{ secrets.DDL_AUTO_VALUE }}'
+            
+            echo ">> Starting backend deployment..."
+            
+            # 최신 백엔드 이미지를 받아옵니다.
+            docker compose -f docker-compose.prod.yml pull neardeal-backend-prod
+            
+            # docker-compose.prod.yml 파일을 사용하여 데이터베이스와 백엔드만 재시작
+            # 주의! 해당 작업에서 데이터베이스도 재시작 하므로 해당 워크플로우 파일에 데이터베이스 컨테이너 실행 시 필요한 환경 변수도 가져와야 함
+            # 만일, 전체 서비스를 재시작하고 싶으면 프론트엔드 서비스 실행 시 필요한 환경 변수도 넣어줘야 함
+            docker compose -f docker-compose.prod.yml up -d --force-recreate neardeal-db-prod neardeal-backend-prod       
+            
+            echo "Deployment to prod server completed successfully!"

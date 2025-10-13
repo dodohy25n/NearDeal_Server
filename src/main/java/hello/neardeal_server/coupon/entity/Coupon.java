@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -56,6 +58,9 @@ public class Coupon extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
+
+    @OneToMany(mappedBy = "coupon")
+    private List<Item> items = new ArrayList<>();
 
     /* --- 메서드 --- */
 

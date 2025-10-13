@@ -73,7 +73,7 @@ public class CouponDetailResponse {
                 .id(coupon.getId())
                 .storeId(coupon.getStore().getId())
                 .storeName(coupon.getStore().getStoreName())
-                .itemId(coupon.getItem().getId())
+                //.itemId(coupon.getItems().get(c)) // todo: 쿠폰/아이템 관계 명확히 하고 다시 구현하자
                 .name(coupon.getName())
                 .description(coupon.getDescription())
                 .issuingQuantity(coupon.getIssuingQuantity())
