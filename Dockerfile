@@ -13,6 +13,8 @@ COPY gradlew ./
 COPY gradle ./gradle
 COPY build.gradle settings.gradle ./
 
+RUN chmod +x ./gradlew
+
 # 프로젝트에 필요한 라이브러리(의존성)를 미리 다운로드합니다.
 # 소스 코드가 변경되어도 이 부분은 캐시로 남아 빌드 속도를 높여줍니다.
 RUN ./gradlew dependencies --no-daemon
