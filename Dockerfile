@@ -20,7 +20,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew dependencies --no-daemon
 
 # 나머지 모든 소스 코드를 컨테이너 안으로 복사합니다.
-COPY . .
+COPY src ./src
 
 # Gradle을 사용하여 프로젝트를 빌드합니다. (테스트는 건너뜁니다)
 # 이 명령을 통해 build/libs/ 폴더에 .jar 파일이 생성됩니다.
