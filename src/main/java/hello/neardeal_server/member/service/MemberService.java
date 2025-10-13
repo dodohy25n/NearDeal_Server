@@ -11,9 +11,11 @@ import hello.neardeal_server.member.dto.response.OwnerDetailResponse;
 import hello.neardeal_server.member.entity.Customer;
 import hello.neardeal_server.member.entity.Member;
 import hello.neardeal_server.member.entity.Owner;
+import hello.neardeal_server.member.entity.TempMember;
 import hello.neardeal_server.member.repository.CustomerRepository;
 import hello.neardeal_server.member.repository.MemberRepository;
 import hello.neardeal_server.member.repository.OwnerRepository;
+import hello.neardeal_server.member.repository.TempMemberRepository;
 import hello.neardeal_server.store.dto.response.StoreDetailResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +36,17 @@ public class MemberService  {
     private final MemberRepository memberRepository;
     private final CustomerRepository customerRepository;
     private final OwnerRepository ownerRepository;
+    private final TempMemberRepository tempMemberRepository;
     //private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    /**
+     * 임시 회원 가입 (단과대학만 입력하여 회원가입)
+     */
+    public Long tempSignup(CustomerRequest customerRequest) {
+        TempMember tempMember = TempMember.create(customerRequest);
+        TempMember savedTempMember = tempMemberRepository.save(tempMember);
+        return savedTempMember.getId();
+    }
 
     /**
      * 회원가입

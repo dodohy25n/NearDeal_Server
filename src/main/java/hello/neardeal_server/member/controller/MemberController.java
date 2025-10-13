@@ -31,6 +31,20 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    // == 초기 API == //
+    @PostMapping("/pre-signup")
+    @Operation(summary = "임시 회원 가입", description = "초기 API. 단과대학만 입력하여 회원가입")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "회원 가입 성공"),
+            @ApiResponse(responseCode = "400", description = "회원 가입 실패")
+    })
+    public ResponseEntity<Long> tempSignUp(
+            @Schema(implementation = CustomerRequest.class) @RequestBody CustomerRequest customerRequest
+    ) {
+        Long id = memberService.tempSignup(customerRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(id);
+    }
+
     // == 점주 고객 공통 API == //
     @PostMapping("/signup")
     @Operation(summary = "회원 가입", description = "회원 가입")
