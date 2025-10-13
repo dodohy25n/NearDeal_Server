@@ -55,7 +55,7 @@ public class Item extends BaseEntity {
         this.coupon = coupon;
     }
 
-    // == 생성자 메서드 == ////
+    // == 생성자 메서드 == //
     public static Item create(ItemRequest itemRequest, Store store, String imageUrl){
         Item item = new Item();
         item.name = itemRequest.getName();
