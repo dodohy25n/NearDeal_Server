@@ -31,7 +31,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // == 초기 API == //
+    // == 초기 API == ////
     @PostMapping("/pre-signup")
     @Operation(summary = "임시 회원 가입", description = "초기 API. 단과대학만 입력하여 회원가입")
     @ApiResponses(value = {
