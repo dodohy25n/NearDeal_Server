@@ -42,7 +42,6 @@ public class MemberController {
             @Schema(implementation = CustomerRequest.class) @RequestBody CustomerRequest customerRequest
     ) {
         Long id = memberService.tempSignup(customerRequest);
-        System.out.println("customerRequest = " + customerRequest.getAffiliation());
         return ResponseEntity.status(HttpStatus.CREATED).body(id);
     }
 
