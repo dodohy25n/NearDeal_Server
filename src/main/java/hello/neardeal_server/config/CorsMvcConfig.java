@@ -12,6 +12,10 @@ public class CorsMvcConfig implements WebMvcConfigurer {
 
         corsRegistry.addMapping("/**")
                 .allowedOrigins("https://near-deal.vercel.app", "http://localhost:3000")
-                .exposedHeaders("Authorization"); // ← 새 액세스 토큰 읽으려면 필수
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true)
+                .exposedHeaders("Authorization");
     }
 }
