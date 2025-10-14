@@ -15,7 +15,13 @@ public enum PartnerCategory {
     의과대학("MEDICINE"),
     인문대학("HUMANITIES"),
     자연과학대학("NATURAL_SCIENCES"),
-    치과대학("DENTISTRY");
+    치과대학("DENTISTRY"),
+    국제이공학부("INTERNATIONAL_SCHOOL_OF_ENGINEERING"),
+    수의과대학("VETERINARY_MEDICINE"),
+    융합자율전공학부("INTERDISCIPLINARY_AND_AUTONOMOUS_MAJORS"),
+    융합학부("SCHOOL_OF_CONVERGENCE"),
+    한옥학과("DEPARTMENT_OF_HANOK"),
+    환경생명자원대학("ENVIRONMENTAL_AND_BIORESOURCE_SCIENCES");
 
     private final String englishName;
 
@@ -40,5 +46,11 @@ public enum PartnerCategory {
 //    MEDICINE,                // 의과대학
 //    HUMANITIES,              // 인문대학
 //    NATURAL_SCIENCES,        // 자연과학대학
-//    DENTISTRY                // 치과대학
+//    DENTISTRY,               // 치과대학
+//    INTERNATIONAL_SCHOOL_OF_ENGINEERING, // 국제이공학부
+//    VETERINARY_MEDICINE,     // 수의과대학
+//    INTERDISCIPLINARY_AND_AUTONOMOUS_MAJORS, // 융합자율전공학부
+//    SCHOOL_OF_CONVERGENCE,   // 융합학부
+//    DEPARTMENT_OF_HANOK,     // 한옥학과
+//    ENVIRONMENTAL_AND_BIORESOURCE_SCIENCES // 환경생명자원대학
 }
