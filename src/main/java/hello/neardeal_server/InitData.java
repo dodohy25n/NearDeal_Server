@@ -24,8 +24,8 @@ public class InitData {
     @PostConstruct
     public void init() {
 
-//        Customer customer1 = Customer.create(new CustomerRequest(PartnerCategory.EDUCATION));
-//        Customer customer2 = Customer.create(new CustomerRequest(PartnerCategory.ARTS));
+//        Customer customer1 = Customer.create(new CustomerRequest(PartnerCategory.사범대학));
+//        Customer customer2 = Customer.create(new CustomerRequest(PartnerCategory.예술대학));
 //        customerRepository.save(customer1);
 //        customerRepository.save(customer2);
 //

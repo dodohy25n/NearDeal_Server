@@ -23,7 +23,7 @@ public class Customer {
     private Long id;
 
     @Column(nullable = false)
-    private PartnerCategory affiliation = PartnerCategory.NONE; // 소속
+    private PartnerCategory affiliation = PartnerCategory.없음; // 소속
 
     /* --- 관계 --- */
 

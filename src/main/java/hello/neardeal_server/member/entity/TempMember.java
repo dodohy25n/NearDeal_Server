@@ -23,6 +23,7 @@ public class TempMember {
     public static TempMember create(CustomerRequest customerRequest) {
         TempMember tempMember = new TempMember();
         tempMember.affiliation = customerRequest.getAffiliation();
+        System.out.println("tempMember.getAffiliation() = " + tempMember.getAffiliation());
         return tempMember;
     }
 }
