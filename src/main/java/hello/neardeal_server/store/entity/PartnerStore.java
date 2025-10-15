@@ -26,7 +26,7 @@ public class PartnerStore {
     @Enumerated(EnumType.STRING)
     private StoreCategory category;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String storeName;
 
     @Column(nullable = false)
