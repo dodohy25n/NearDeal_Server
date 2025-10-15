@@ -3,6 +3,7 @@ package hello.neardeal_server.member.entity;
 public enum PartnerCategory {
 
     없음("NONE"),
+    총학생회("STUDENT_COUNCIL"),
     간호대학("NURSING"),
     경상대학("ECONOMICS_AND_BUSINESS"),
     공과대학("ENGINEERING"),
