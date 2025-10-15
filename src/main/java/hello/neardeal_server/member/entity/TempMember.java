@@ -1,5 +1,6 @@
 package hello.neardeal_server.member.entity;
 
+import hello.neardeal_server.common.auditing.BaseEntity;
 import hello.neardeal_server.member.dto.request.CustomerRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TempMember {
+public class TempMember extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,7 @@ public class TempMember {
 
     @Enumerated(EnumType.STRING)
     private PartnerCategory affiliation;
+
 
 
     public static TempMember create(CustomerRequest customerRequest) {

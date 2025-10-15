@@ -1,5 +1,6 @@
 package hello.neardeal_server.member.entity;
 
+import hello.neardeal_server.common.auditing.BaseEntity;
 import hello.neardeal_server.member.dto.request.MemberUpdateRequest;
 import hello.neardeal_server.member.dto.request.SignupRequest;
 import jakarta.persistence.*;
@@ -11,7 +12,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
