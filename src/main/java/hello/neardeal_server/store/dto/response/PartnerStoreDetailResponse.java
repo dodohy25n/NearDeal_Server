@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embedded;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -50,10 +52,10 @@ public class PartnerStoreDetailResponse {
     private String lastOrder;
 
     @Schema(description = "위도")
-    private Float lat;
+    private BigDecimal lat;
 
     @Schema(description = "경도")
-    private Float lng;
+    private BigDecimal lng;
 
     @Schema(description = "소개")
     private String introduce;
