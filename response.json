@@ -1,0 +1,22 @@
+﻿
+
+StatusCode        : 200
+StatusDescription : 
+Content           : {"id":154,"storeName":"ê¸ë¶ìì¥"}
+RawContent        : HTTP/1.1 200 
+                    Vary: Origin,Access-Control-Request-Method,Access-Control-Request-Headers
+                    Transfer-Encoding: chunked
+                    Content-Type: application/json
+                    Date: Sun, 19 Oct 2025 15:29:38 GMT
+                    
+                    {"id":154,"...
+Forms             : {}
+Headers           : {[Vary, Origin,Access-Control-Request-Method,Access-Control-Request-Headers], [Transfer-Encoding, chunked], [Content-Type, application/json], [Date, Sun, 19 Oct 2025 15:29:38 GMT]}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : mshtml.HTMLDocumentClass
+RawContentLength  : 37
+
+
+
