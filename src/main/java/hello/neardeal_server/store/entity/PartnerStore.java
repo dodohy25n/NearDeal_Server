@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,6 +22,8 @@ public class PartnerStore {
     @Enumerated(EnumType.STRING)
     private PartnerCategory partnerCategory;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String partnerBenefit;
 
     @Column(nullable = false)
@@ -44,12 +48,12 @@ public class PartnerStore {
 
     private String lastOrder;
 
-    @Column(nullable = false)
-    private float lat;  // 위도 
+    @Column(nullable = false, precision = 16, scale = 13)
+    private BigDecimal lat; // 위도
 
-    @Column(nullable = false)
-    private float lng;  // 경도
-
+    @Column(nullable = false, precision = 16, scale = 13)
+    private BigDecimal lng; // 경도
+ 
     private String introduce; // 간단 소개
 
     private String phone;

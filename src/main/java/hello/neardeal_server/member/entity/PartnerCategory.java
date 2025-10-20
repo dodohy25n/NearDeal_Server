@@ -7,7 +7,7 @@ public enum PartnerCategory {
     간호대학("NURSING"),
     경상대학("ECONOMICS_AND_BUSINESS"),
     공과대학("ENGINEERING"),
-    농생대학("AGRICULTURE_AND_LIFE_SCIENCES"),
+    농업생명과학대학("AGRICULTURE_AND_LIFE_SCIENCES"),
     사범대학("EDUCATION"),
     사회과학대학("SOCIAL_SCIENCES"),
     생활과학대학("HUMAN_ECOLOGY"),
