@@ -30,4 +30,13 @@ public class PartnerStoreService {
             return all.map(store -> PartnerStoreDetailResponse.entityToResponse(store));
         }
     }
+
+    public PartnerStoreDetailResponse findStoreDetail(Long storeId) {
+        PartnerStore partnerStore = findOne(storeId);
+        return PartnerStoreDetailResponse.entityToResponse(partnerStore);
+    }
+
+    public PartnerStore findOne(Long storeId) {
+        return partnerStoreRepository.findById(storeId).orElseThrow(() -> new RuntimeException("찾는 store가 없습니다"));
+    }
 }
