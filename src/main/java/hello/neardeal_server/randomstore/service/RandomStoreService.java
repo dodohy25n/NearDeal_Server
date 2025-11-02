@@ -2,7 +2,6 @@ package hello.neardeal_server.randomstore.service;
 
 import hello.neardeal_server.randomstore.dto.RandomStoreResponse;
 import hello.neardeal_server.randomstore.repository.RandomStoreRepository;
-import hello.neardeal_server.store.entity.PartnerStore;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,34 +18,22 @@ public class RandomStoreService {
     }
 
     public RandomStoreResponse getRandom(String category) {
-        PartnerStore store = (category == null || category.isBlank())
-                ? repo.pickRandom().orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "No store found"))
-                : repo.pickRandomByCategory(category).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "No store in category: " + category));
+        Object[] row = (category == null || category.isBlank())
+                ? repo.pickRandomRaw()
+                : repo.pickRandomRawByCategory(category);
 
-        // ✅ 아래 getter 이름은 실제 PartnerStore 엔티티에 맞춰 조정
-        return new RandomStoreResponse(getId(store), getStoreName(store));
-    }
-
-    // --- 필요 시 실제 필드명에 맞게 매핑 헬퍼 작성 ---
-    private Long getId(PartnerStore s) {
-        // 보통은 s.getId()
-        // 만약 필드명이 partnerStoreId면 s.getPartnerStoreId()
-        try { return (Long) s.getClass().getMethod("getId").invoke(s); }
-        catch (Exception e) {
-            try { return (Long) s.getClass().getMethod("getPartnerStoreId").invoke(s); }
-            catch (Exception e2) { throw new IllegalStateException("PartnerStore id getter 확인 필요"); }
+        if (row == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    (category == null || category.isBlank())
+                            ? "No store found"
+                            : "No store in category: " + category);
         }
-    }
 
-    private String getStoreName(PartnerStore s) {
-        // 보통은 s.getStoreName()
-        // 만약 snake_case 매핑이면 s.getStore_name()
-        try { return (String) s.getClass().getMethod("getStoreName").invoke(s); }
-        catch (Exception e) {
-            try { return (String) s.getClass().getMethod("getStore_name").invoke(s); }
-            catch (Exception e2) { throw new IllegalStateException("PartnerStore storeName getter 확인 필요"); }
-        }
+        Long id = ((Number) row[0]).longValue();
+        String name = (String) row[1];
+        String benefit = (String) row[2];
+
+        return new RandomStoreResponse(id, name, benefit);
     }
 }
