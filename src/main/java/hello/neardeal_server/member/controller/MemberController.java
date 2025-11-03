@@ -22,7 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "회원 컨트롤러", description = "회원 관련 API 엔드포인트")
+@Tag(name = "회원 컨트롤러", description = "회원 관련 API 엔드포인트") //
 //@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 @RequestMapping("/api/member")
 @RestController
