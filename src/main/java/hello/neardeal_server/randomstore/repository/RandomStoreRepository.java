@@ -21,3 +21,5 @@ public interface RandomStoreRepository extends JpaRepository<PartnerStore, Long>
         """, nativeQuery = true)
     Object[] pickRandomRawByCategory(String category);
 }
+
+//테스트용 주석
