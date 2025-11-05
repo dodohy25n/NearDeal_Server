@@ -4,6 +4,8 @@ import hello.neardeal_server.store.entity.PartnerStore;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface RandomStoreRepository extends JpaRepository<PartnerStore, Long> {
 
     @Query(value = """
@@ -11,7 +13,7 @@ public interface RandomStoreRepository extends JpaRepository<PartnerStore, Long>
         FROM partner_store
         ORDER BY RAND() LIMIT 1
         """, nativeQuery = true)
-    Object[] pickRandomRaw();
+    List<Object[]> pickRandomRaw();
 
     @Query(value = """
         SELECT partner_store_id, store_name, partner_benefit
@@ -19,7 +21,7 @@ public interface RandomStoreRepository extends JpaRepository<PartnerStore, Long>
         WHERE category = ?1
         ORDER BY RAND() LIMIT 1
         """, nativeQuery = true)
-    Object[] pickRandomRawByCategory(String category);
+    List<Object[]> pickRandomRawByCategory(String category);
 }
 
 //테스트용 주석

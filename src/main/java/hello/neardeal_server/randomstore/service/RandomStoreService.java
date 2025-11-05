@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 public class RandomStoreService {
@@ -18,17 +20,19 @@ public class RandomStoreService {
     }
 
     public RandomStoreResponse getRandom(String category) {
-        Object[] row = (category == null || category.isBlank())
+        List<Object[]> results = (category == null || category.isBlank())
                 ? repo.pickRandomRaw()
                 : repo.pickRandomRawByCategory(category);
 
-        if (row == null) {
+        if (results == null || results.isEmpty()) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     (category == null || category.isBlank())
                             ? "No store found"
                             : "No store in category: " + category);
         }
+
+        Object[] row = results.get(0);
 
         Long id = ((Number) row[0]).longValue();
         String name = (String) row[1];
