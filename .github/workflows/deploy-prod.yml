@@ -2,7 +2,7 @@ name: "BE-PROD :: Build and Deploy to Prod Server"
 
 on:
   push:
-    # main 브랜치에 푸시될 때 실행
+    # main 브랜치에 푸시될 때 실행.
     branches:
       - main
 
