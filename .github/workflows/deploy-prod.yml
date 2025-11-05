@@ -36,7 +36,7 @@ jobs:
           password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
           script: |
             # 애플리케이션 디렉터리로 이동
-            cd /cpu/neardeal
+            cd /home/cpu/neardeal
             
             echo "Exporting sensitive secrets..."
             export DB_HOST='${{ secrets.DB_HOST }}'
@@ -47,11 +47,11 @@ jobs:
             echo ">> Starting backend deployment..."
             
             # 최신 백엔드 이미지를 받아옵니다.
-            docker compose -f docker-compose.prod.yml pull neardeal-backend-prod
+            docker-compose -f docker-compose.prod.yml pull neardeal-backend-prod
             
             # docker-compose.prod.yml 파일을 사용하여 데이터베이스와 백엔드만 재시작
             # 주의! 해당 작업에서 데이터베이스도 재시작 하므로 해당 워크플로우 파일에 데이터베이스 컨테이너 실행 시 필요한 환경 변수도 가져와야 함
             # 만일, 전체 서비스를 재시작하고 싶으면 프론트엔드 서비스 실행 시 필요한 환경 변수도 넣어줘야 함
-            docker compose -f docker-compose.prod.yml up -d --force-recreate neardeal-db-prod neardeal-backend-prod       
+            docker-compose -f docker-compose.prod.yml up -d --force-recreate neardeal-db-prod neardeal-backend-prod       
             
             echo "Deployment to prod server completed successfully!"
